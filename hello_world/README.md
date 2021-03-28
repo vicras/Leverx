@@ -32,12 +32,16 @@ To use this program:
     > javadoc -d ./docs/javadoc -charset utf-8  -sourcepath ./src -subpackages com.vicras
     > 
     > -d where to place generated files
+    > 
     > -charset define charset
+    > 
     > -sourcepath where to find input source files (current if not defined)
+    > 
     > -subpackages Generates documentation from source files in the specified packages
 
 5. To run jar file: 
     > java -jar ./artifacts/my.jar
+    > 
     > -jar executes a program encapsulated in a JAR file
 
 # Output example
