@@ -13,6 +13,7 @@ To use this program:
 
 ### For others make similar actions:
 1.  Create similar folder structure:
+
 ![Folder structure before make.sh run](https://github.com/vicras/Leverx/blob/master/hello_world/output/start_tree.png)
 
 2. Compile project: 
