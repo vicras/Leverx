@@ -22,6 +22,7 @@ To use this program:
     javac -d ./bin -sourcepath ./src ./src/com/vicras/Main.java
     
     -d where to place generated class files
+    
     -sourcepath where to find input source files (current if not defined)
     </code>
 
