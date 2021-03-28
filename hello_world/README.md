@@ -13,12 +13,12 @@ To use this program:
 
 ### For others make similar actions:
 1.  Create similar folder structure:
+![Folder structure before make.sh run](https://github.com/vicras/Leverx/blob/master/hello_world/output/start_tree.png)
 
 2. Compile project: 
     > javac -d ./bin -sourcepath ./src ./src/com/vicras/Main.java
     -d where to place generated class files
     -sourcepath where to find input source files (current if not defined)
-
 
 3. Run project: 
     > java -classpath ./bin com/vicras/Main
@@ -36,4 +36,7 @@ To use this program:
     -jar executes a program encapsulated in a JAR file
 
 # Output example
-![]()
+![Output example](https://github.com/vicras/Leverx/blob/master/hello_world/output/output.png)
+
+# Folder structure
+![Folder structure after make.sh run](https://github.com/vicras/Leverx/blob/master/hello_world/output/end_tree.png)
