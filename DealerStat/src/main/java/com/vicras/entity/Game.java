@@ -1,7 +1,7 @@
 package com.vicras.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.vicras.dto.GameDTO;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +11,9 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
+@AllArgsConstructor
+@Getter
+@Builder(access = AccessLevel.PUBLIC)
 public class Game extends BaseEntity{
 
     @Column(name = "title" , nullable = false)
@@ -18,4 +21,11 @@ public class Game extends BaseEntity{
 
     @ManyToMany(mappedBy = "games")
     private List<GameObject> gameObjects;
+
+    public Game() {
+    }
+
+    public GameDTO convert2DTO(){
+        return new GameDTO(id, title);
+    }
 }
