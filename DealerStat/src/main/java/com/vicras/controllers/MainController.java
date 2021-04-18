@@ -22,14 +22,6 @@ public class MainController {
 
     @RequestMapping("/hello/{player}")
     public String message(@PathVariable String player) {
-        User build = User.builder()
-                .email("vasua@gmail.com")
-                .firstName("vasua")
-                .lastName("pupkin")
-                .password("pupkin12345")
-                .role(Role.ADMIN)
-                .build();
-        userService.addNewUser(build);
         return "hello";
     }
 }

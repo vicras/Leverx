@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -14,5 +15,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("select u from User u where u.entityStatus = ?1")
     List<User> findAllWithStatus(EntityStatus entityStatus);
+
+    Optional<User> findByEmail(String email);
 
 }

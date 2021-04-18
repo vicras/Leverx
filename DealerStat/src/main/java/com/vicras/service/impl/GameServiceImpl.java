@@ -3,7 +3,6 @@ package com.vicras.service.impl;
 import com.vicras.entity.Game;
 import com.vicras.repository.GameRepository;
 import com.vicras.service.GameService;
-import lombok.var;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

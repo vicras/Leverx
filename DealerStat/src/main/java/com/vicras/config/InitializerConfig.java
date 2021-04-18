@@ -1,7 +1,11 @@
 package com.vicras.config;
 
+import com.vicras.config.DatabaseConfig;
+import com.vicras.config.WebConfig;
 import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.context.support.GenericWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.servlet.ServletContext;
@@ -9,14 +13,16 @@ import javax.servlet.ServletRegistration;
 
 public class InitializerConfig implements WebApplicationInitializer {
 
-    public void onStartup(ServletContext container) {
-        AnnotationConfigWebApplicationContext webContext = new AnnotationConfigWebApplicationContext();
-        webContext.register(DatabaseConfig.class);
-        webContext.register(WebConfig.class);
-        webContext.setServletContext(container);
-        ServletRegistration.Dynamic reg = container.addServlet("dispatcherServlet", new DispatcherServlet(webContext));
-        reg.setLoadOnStartup(1);
-        reg.addMapping("*.action");
+    @Override
+    public void onStartup(ServletContext sc) {
+        AnnotationConfigWebApplicationContext root = new AnnotationConfigWebApplicationContext();
+        root.scan("com.vicras");
+        sc.addListener(new ContextLoaderListener(root));
+        root.register(DatabaseConfig.class);
+        root.register(WebConfig.class);
+        ServletRegistration.Dynamic appServlet = sc.addServlet("springServlet",
+                new DispatcherServlet(new GenericWebApplicationContext()));
+        appServlet.setLoadOnStartup(1);
+        appServlet.addMapping("/");
     }
-
 }
