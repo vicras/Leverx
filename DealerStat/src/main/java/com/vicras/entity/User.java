@@ -1,5 +1,6 @@
 package com.vicras.entity;
 
+import com.vicras.dto.UserDTO;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,6 +12,9 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 public class User extends BaseEntity {
+
+    @Transient
+    private static final String PASSWORD_PLACEHOLDER = "*****";
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
@@ -35,5 +39,18 @@ public class User extends BaseEntity {
     private Set<GameObject> gameObjects;
 
     public User() {
+    }
+
+    public UserDTO convert2DTO() {
+        return UserDTO.builder()
+                .id(id)
+                .createdAt(createdAt)
+                .updatedAt(updatedAt)
+                .email(email)
+                .password(PASSWORD_PLACEHOLDER)
+                .lastName(lastName)
+                .firstName(firstName)
+                .role(role.name())
+                .build();
     }
 }
