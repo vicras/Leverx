@@ -1,5 +1,6 @@
 package com.vicras.entity;
 
+import com.vicras.dto.GameObjectDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -32,4 +33,16 @@ public class GameObject extends BaseEntity {
             inverseJoinColumns = { @JoinColumn(name = "game_id") }
     )
     private Set<Game> games;
+
+    public GameObjectDTO convert2DTO(){
+        return GameObjectDTO.builder()
+                .id(id)
+                .createdAt(createdAt)
+                .updatedAt(updatedAt)
+                .title(title)
+                .description(description)
+                .approvedStatus(approvedStatus.name())
+                .ownerId(owner.id)
+                .build();
+    }
 }
