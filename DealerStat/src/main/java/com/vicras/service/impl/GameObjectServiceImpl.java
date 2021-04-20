@@ -50,7 +50,7 @@ public class GameObjectServiceImpl implements GameObjectService {
     }
 
     @Override
-    public void updateGameObjectForUserOwner(GameObjectDTO gameObjectDTO, User userOwner) {
+    public void updateGameObjectForUserOwner(GameObjectDTO gameObjectDTO, User userOwner) throws UserNotOwnerException {
         Objects.requireNonNull(gameObjectDTO.getId(), () -> "Game object id must be not null");
 
         objectRepository.findById(gameObjectDTO.getId())
@@ -93,19 +93,13 @@ public class GameObjectServiceImpl implements GameObjectService {
     }
 
     @Override
-    public void approveObjects(List<GameObjectDTO> objectsToApprove) {
-        changeApprovedStatus(objectsToApprove, ApprovedStatus.APPROVED);
+    public void approveObjects(List<Long> idsToApprove) {
+        objectRepository.updateObjectStatusWithIdIn(idsToApprove, ApprovedStatus.APPROVED);
     }
 
     @Override
-    public void declineObjects(List<GameObjectDTO> objectsToDecline) {
-        changeApprovedStatus(objectsToDecline, ApprovedStatus.DECLINE);
+    public void declineObjects(List<Long> idsToDecline) {
+        objectRepository.updateObjectStatusWithIdIn(idsToDecline, ApprovedStatus.DECLINE);
     }
 
-    private void changeApprovedStatus(List<GameObjectDTO> objectsToApprove, ApprovedStatus status) {
-        List<Long> objectIds = objectsToApprove.stream()
-                .map(GameObjectDTO::getId)
-                .collect(Collectors.toList());
-        objectRepository.updateObjectStatusWithIdIn(objectIds, status);
-    }
 }

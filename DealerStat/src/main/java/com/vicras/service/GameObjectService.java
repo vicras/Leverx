@@ -3,6 +3,7 @@ package com.vicras.service;
 import com.vicras.dto.GameObjectDTO;
 import com.vicras.entity.GameObject;
 import com.vicras.entity.User;
+import com.vicras.exception.UserNotOwnerException;
 
 import java.util.List;
 
@@ -11,16 +12,16 @@ public interface GameObjectService {
 
     List<GameObject> getAllGameObjectsForUser(User user);
 
-    public void addNewGameObjectForUser(GameObjectDTO gameObjectDTO, User user);
+    void addNewGameObjectForUser(GameObjectDTO gameObjectDTO, User user);
 
-    void deleteGameObjectForUserOwner(long id, User userOwner);
+    void deleteGameObjectForUserOwner(long id, User userOwner) throws UserNotOwnerException;
 
-    public void updateGameObjectForUserOwner(GameObjectDTO gameObjectDTO, User userOwner);
+    void updateGameObjectForUserOwner(GameObjectDTO gameObjectDTO, User userOwner) throws UserNotOwnerException;
 
     List<GameObject> getObjectsForApprove();
 
-    void approveObjects(List<GameObjectDTO> objectsToApprove);
+    void approveObjects(List<Long> idsToApprove);
 
-    void declineObjects(List<GameObjectDTO> objectsToApprove);
+    void declineObjects(List<Long> idsToDecline);
 
 }
