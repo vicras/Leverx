@@ -41,13 +41,13 @@ public class AuthorizationController {
     }
 
     @PostMapping("/forgot_password")
-    private ResponseEntity<String> restorePassword(@RequestBody String userEmail){
+    private ResponseEntity<String> forgotPassword(@RequestBody String userEmail){
         authService.forgotPasswordWithEmail(userEmail);
         return new ResponseEntity<>("Message with instructions has been sent to your mail", HttpStatus.OK);
     }
 
     @PostMapping("/reset_password")
-    private ResponseEntity<String> resetPassword(@RequestBody CodePasswordDTO dto){
+    private ResponseEntity<String> updatePasswordWithCode(@RequestBody CodePasswordDTO dto){
         authService.updatePasswordByCode(dto.getCode(), dto.getPassword());
         return new ResponseEntity<>("Password was successfully updated", HttpStatus.OK);
     }

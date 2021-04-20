@@ -20,9 +20,6 @@ import java.util.stream.Collectors;
 @Service
 public class CommentServiceImpl implements CommentService {
 
-    public final static Comparator<Comment> BY_SCORE_COMPARATOR = Comparator.comparingInt(Comment::getMark);
-    public final static Comparator<Comment> BY_SCORE_REVERSE_COMPARATOR = BY_SCORE_COMPARATOR.reversed();
-
     final private CommentRepository commentRepository;
     final private UserRepository userRepository;
 
@@ -60,7 +57,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> getCommentsForUserWithId(Long userId) {
+    public List<Comment> getCommentsForUserWithId(Long userId) throws UserNotExistException {
         User destUser = getUserIfExistById(userId);
         return commentRepository.findAllByDestinationUser(destUser);
     }
