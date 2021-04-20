@@ -3,8 +3,8 @@ package com.vicras.service.impl;
 import com.vicras.dto.UserDTO;
 import com.vicras.entity.EntityStatus;
 import com.vicras.entity.User;
-import com.vicras.exception.UserAlreadyExistException;
 import com.vicras.exception.CodeNotFoundException;
+import com.vicras.exception.UserAlreadyExistException;
 import com.vicras.repository.UserCodeRepository;
 import com.vicras.repository.UserRepository;
 import com.vicras.security.UserConfirmMessage;
@@ -13,22 +13,15 @@ import com.vicras.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Service
 @PropertySource("classpath:application.properties")
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
 
     private final static TimeUnit TIMEOUT_TIME_UNIT = TimeUnit.HOURS;
 
@@ -41,7 +34,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Value("${reset.pass.confirm.link}")
     private static String RESET_PASS_CONFIRM_LINK;
 
-    private final UserRepository userRepository;
+        private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final ApplicationEventPublisher publisher;
     private final CodeGeneratorService codeGeneratorService;
@@ -165,36 +158,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public List<User> getDeletedUsers() {
         return userRepository.findAllWithStatus(EntityStatus.DELETED);
-    }
-
-
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        boolean accountNotExpired = true;
-        boolean credentialsNotExpired = true;
-        boolean accountNotLocked = true;
-
-        Optional<User> optionalUser = userRepository.findByEmail(email);
-        User user = optionalUser.orElseThrow(
-                () -> new UsernameNotFoundException(String.format("User '%s' not found", email)));
-
-        return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
-                user.getPassword(),
-                isUserActive(user),
-                accountNotExpired,
-                credentialsNotExpired,
-                accountNotLocked,
-                getUserCredentials(user)
-        );
-    }
-
-    private boolean isUserActive(User user) {
-        return user.getEntityStatus() == EntityStatus.ACTIVE;
-    }
-
-    private Collection<? extends GrantedAuthority> getUserCredentials(User user) {
-        return List.of(new SimpleGrantedAuthority(user.getRole().name()));
     }
 
 
