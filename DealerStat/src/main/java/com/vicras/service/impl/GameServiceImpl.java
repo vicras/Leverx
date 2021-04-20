@@ -6,7 +6,9 @@ import com.vicras.service.GameService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class GameServiceImpl implements GameService {
@@ -29,5 +31,10 @@ public class GameServiceImpl implements GameService {
                 .title(name)
                 .build();
         gameRepository.save(game);
+    }
+
+    @Override
+    public Set<Game> getGamesByKeys(Set<Long> keys) {
+        return new HashSet<>(gameRepository.findAllById(keys));
     }
 }

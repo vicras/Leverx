@@ -34,13 +34,17 @@ public class UserServiceImpl implements UserService {
     @Value("${reset.pass.confirm.link}")
     private static String RESET_PASS_CONFIRM_LINK;
 
-        private final UserRepository userRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final ApplicationEventPublisher publisher;
     private final CodeGeneratorService codeGeneratorService;
     private final UserCodeRepository userCodeRepository;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, ApplicationEventPublisher publisher, CodeGeneratorService codeGeneratorService, UserCodeRepository userCodeRepository) {
+    public UserServiceImpl(UserRepository userRepository,
+                           PasswordEncoder passwordEncoder,
+                           ApplicationEventPublisher publisher,
+                           CodeGeneratorService codeGeneratorService,
+                           UserCodeRepository userCodeRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.publisher = publisher;
@@ -137,7 +141,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    public boolean isCodeActive(String code){
+    public boolean isCodeActive(String code) {
         return userCodeRepository.isExistWithCode(code);
     }
 

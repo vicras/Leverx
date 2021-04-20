@@ -1,6 +1,7 @@
 package com.vicras.entity;
 
 import com.vicras.dto.GameObjectDTO;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -8,6 +9,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
+@Builder
 @Data
 @Table(name = "game_object")
 @Entity
@@ -41,7 +43,7 @@ public class GameObject extends BaseEntity {
                 .updatedAt(updatedAt)
                 .title(title)
                 .description(description)
-                .approvedStatus(approvedStatus.name())
+                .approvedStatus(approvedStatus)
                 .ownerId(owner.id)
                 .build();
     }

@@ -24,7 +24,7 @@ public class MessageEventListener{
     }
 
     private void sendMessage(SimpleMailMessage message){
-        sender.send(message);
+//        sender.send(message);
     }
 
 }
