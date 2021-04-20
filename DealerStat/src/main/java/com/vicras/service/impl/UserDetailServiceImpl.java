@@ -3,6 +3,7 @@ package com.vicras.service.impl;
 import com.vicras.entity.EntityStatus;
 import com.vicras.entity.User;
 import com.vicras.repository.UserRepository;
+import com.vicras.service.UserService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserDetailServiceImpl implements UserDetailsService {
+public class UserDetailServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     public UserDetailServiceImpl(UserRepository userRepository) {
@@ -50,4 +51,23 @@ public class UserDetailServiceImpl implements UserDetailsService {
     private Collection<? extends GrantedAuthority> getUserCredentials(User user) {
         return List.of(new SimpleGrantedAuthority(user.getRole().name()));
     }
+
+    @Override
+    public void deleteUsersById(Long userId) {
+        userRepository.findById(userId).ifPresent(user -> {
+            user.setEntityStatus(EntityStatus.DELETED);
+            userRepository.save(user);
+        });
+    }
+
+    @Override
+    public List<User> getActiveUsers() {
+        return userRepository.findAllWithStatus(EntityStatus.ACTIVE);
+    }
+
+    @Override
+    public List<User> getDeletedUsers() {
+        return userRepository.findAllWithStatus(EntityStatus.DELETED);
+    }
+
 }

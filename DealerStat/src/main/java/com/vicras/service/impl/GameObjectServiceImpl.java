@@ -44,12 +44,8 @@ public class GameObjectServiceImpl implements GameObjectService {
     @Override
     public void deleteGameObjectForUserOwner(long id, User userOwner) {
         objectRepository.findById(id).ifPresent(gameObj -> {
-            if (isOwnerGameObject(userOwner, gameObj)) {
-                objectRepository.delete(gameObj);
-            } else {
-                throw new UserNotOwnerException(
-                        String.format("User: %s isn't user of object with id %d", userOwner, id));
-            }
+            throwIfUserNotOwner(userOwner, gameObj);
+            objectRepository.delete(gameObj);
         });
     }
 
@@ -65,13 +61,16 @@ public class GameObjectServiceImpl implements GameObjectService {
     }
 
     private void updateIfOwnerObject(User currentUser, GameObject oldObject, GameObjectDTO newObject) {
-        if (isOwnerGameObject(currentUser, oldObject)) {
-            newObject.updateExistingObject(oldObject, gameService);
-            objectRepository.save(oldObject);
-        } else {
+        throwIfUserNotOwner(currentUser, oldObject);
+        newObject.updateExistingObject(oldObject, gameService);
+        objectRepository.save(oldObject);
+
+    }
+
+    private void throwIfUserNotOwner(User user, GameObject gameObject) {
+        if (isOwnerGameObject(user, gameObject))
             throw new UserNotOwnerException(
-                    String.format("User: %s isn't user of object with id %d", currentUser, oldObject.getId()));
-        }
+                    String.format("User: %s isn't user of object with id %d", user, gameObject.getId()));
     }
 
     private boolean isOwnerGameObject(User user, GameObject gameObject) {

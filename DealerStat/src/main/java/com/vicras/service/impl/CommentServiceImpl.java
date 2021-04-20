@@ -9,7 +9,7 @@ import com.vicras.repository.CommentRepository;
 import com.vicras.repository.UserRepository;
 import com.vicras.service.CommentService;
 import com.vicras.service.GameObjectService;
-import com.vicras.service.UserService;
+import com.vicras.service.AuthenticationService;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -26,12 +26,12 @@ public class CommentServiceImpl implements CommentService {
     final private CommentRepository commentRepository;
     final private UserRepository userRepository;
 
-    final private UserService userService;
+    final private AuthenticationService userService;
     final private GameObjectService gameObjectService;
 
     public CommentServiceImpl(CommentRepository commentRepository,
                               UserRepository userRepository,
-                              UserService userService,
+                              AuthenticationService userService,
                               GameObjectService gameObjectService) {
         this.commentRepository = commentRepository;
         this.userRepository = userRepository;

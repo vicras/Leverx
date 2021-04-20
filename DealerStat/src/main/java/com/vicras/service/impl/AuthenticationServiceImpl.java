@@ -8,20 +8,19 @@ import com.vicras.exception.UserAlreadyExistException;
 import com.vicras.repository.UserCodeRepository;
 import com.vicras.repository.UserRepository;
 import com.vicras.security.UserConfirmMessage;
+import com.vicras.service.AuthenticationService;
 import com.vicras.service.CodeGeneratorService;
-import com.vicras.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Service
 @PropertySource("classpath:application.properties")
-public class UserServiceImpl implements UserService {
+public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final static TimeUnit TIMEOUT_TIME_UNIT = TimeUnit.HOURS;
 
@@ -40,11 +39,11 @@ public class UserServiceImpl implements UserService {
     private final CodeGeneratorService codeGeneratorService;
     private final UserCodeRepository userCodeRepository;
 
-    public UserServiceImpl(UserRepository userRepository,
-                           PasswordEncoder passwordEncoder,
-                           ApplicationEventPublisher publisher,
-                           CodeGeneratorService codeGeneratorService,
-                           UserCodeRepository userCodeRepository) {
+    public AuthenticationServiceImpl(UserRepository userRepository,
+                                     PasswordEncoder passwordEncoder,
+                                     ApplicationEventPublisher publisher,
+                                     CodeGeneratorService codeGeneratorService,
+                                     UserCodeRepository userCodeRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.publisher = publisher;
@@ -53,30 +52,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User addNewUser(UserDTO userDTO) throws UserAlreadyExistException {
+    public User addNewUser(UserDTO userDTO){
         if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
             throw new UserAlreadyExistException(String.format("User with mail %s already exist", userDTO.getEmail()));
         }
 
-        User user = convert2User(userDTO);
+        User user = userDTO.convert2User(passwordEncoder);
         userRepository.save(user);
 
         String code = generateCode(user);
         publicUserCode(user, code);
         publicNewUserConfirmMessageEvent(user, code);
-        return user;
-    }
-
-    private User convert2User(UserDTO userDTO) {
-        String ePassword = passwordEncoder.encode(userDTO.getPassword());
-        var user = User.builder()
-                .email(userDTO.getEmail())
-                .firstName(userDTO.getFirstName())
-                .lastName(userDTO.getLastName())
-                .password(ePassword)
-                .role(userDTO.getRole())
-                .build();
-        user.setEntityStatus(EntityStatus.INACTIVE);
         return user;
     }
 
@@ -95,7 +81,7 @@ public class UserServiceImpl implements UserService {
         publisher.publishEvent(event);
     }
 
-    public void confirmUser(String code, User currentUser) throws CodeNotFoundException {
+    public void confirmUser(String code, User currentUser){
         var userId = userCodeRepository.findWithCode(code)
                 .orElseThrow(CodeNotFoundException::new);
         if (isIdOfThisPerson(currentUser, userId)
@@ -145,25 +131,5 @@ public class UserServiceImpl implements UserService {
     public boolean isCodeActive(String code) {
         return userCodeRepository.isExistWithCode(code);
     }
-
-
-    @Override
-    public void deleteUsersById(Long userId) {
-        userRepository.findById(userId).ifPresent(user -> {
-            user.setEntityStatus(EntityStatus.DELETED);
-            userRepository.save(user);
-        });
-    }
-
-    @Override
-    public List<User> getActiveUsers() {
-        return userRepository.findAllWithStatus(EntityStatus.ACTIVE);
-    }
-
-    @Override
-    public List<User> getDeletedUsers() {
-        return userRepository.findAllWithStatus(EntityStatus.DELETED);
-    }
-
 
 }

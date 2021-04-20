@@ -1,6 +1,6 @@
 package com.vicras.exception;
 
-public class CodeNotFoundException extends Exception{
+public class CodeNotFoundException extends RuntimeException{
     public CodeNotFoundException() {
         super();
     }

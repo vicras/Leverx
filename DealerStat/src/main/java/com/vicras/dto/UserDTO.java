@@ -1,8 +1,11 @@
 package com.vicras.dto;
 
+import com.vicras.entity.EntityStatus;
 import com.vicras.entity.Role;
+import com.vicras.entity.User;
 import lombok.Builder;
 import lombok.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 
@@ -18,4 +21,17 @@ public class UserDTO {
     String lastName;
     String password;
     Role role;
+
+    public User convert2User(PasswordEncoder encoder) {
+        String ePassword = encoder.encode(password);
+        var user = User.builder()
+                .email(email)
+                .firstName(firstName)
+                .lastName(lastName)
+                .password(ePassword)
+                .role(role)
+                .build();
+        user.setEntityStatus(EntityStatus.INACTIVE);
+        return user;
+    }
 }
