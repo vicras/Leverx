@@ -17,4 +17,10 @@ public interface GameObjectService {
 
     public void updateGameObjectForUserOwner(GameObjectDTO gameObjectDTO, User userOwner);
 
+    List<GameObject> getObjectsForApprove();
+
+    void approveObjects(List<GameObjectDTO> objectsToApprove);
+
+    void declineObjects(List<GameObjectDTO> objectsToApprove);
+
 }

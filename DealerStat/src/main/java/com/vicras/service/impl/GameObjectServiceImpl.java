@@ -1,6 +1,7 @@
 package com.vicras.service.impl;
 
 import com.vicras.dto.GameObjectDTO;
+import com.vicras.entity.ApprovedStatus;
 import com.vicras.entity.GameObject;
 import com.vicras.entity.User;
 import com.vicras.exception.UserNotOwnerException;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class GameObjectServiceImpl implements GameObjectService {
@@ -74,5 +76,37 @@ public class GameObjectServiceImpl implements GameObjectService {
 
     private boolean isOwnerGameObject(User user, GameObject gameObject) {
         return gameObject.getOwner().equals(user);
+    }
+
+
+    @Override
+    public List<GameObject> getObjectsForApprove() {
+        var statuses = List.of(ApprovedStatus.VIEWED,
+                ApprovedStatus.SENT);
+        return objectRepository.findAllByApprovedStatusIn(statuses).stream()
+                .peek(e -> updateAndSaveObjectApprovedStatus(e, ApprovedStatus.VIEWED))
+                .collect(Collectors.toList());
+    }
+
+    private void updateAndSaveObjectApprovedStatus(GameObject object, ApprovedStatus status) {
+        object.setApprovedStatus(status);
+        objectRepository.save(object);
+    }
+
+    @Override
+    public void approveObjects(List<GameObjectDTO> objectsToApprove) {
+        changeApprovedStatus(objectsToApprove, ApprovedStatus.APPROVED);
+    }
+
+    @Override
+    public void declineObjects(List<GameObjectDTO> objectsToDecline) {
+        changeApprovedStatus(objectsToDecline, ApprovedStatus.DECLINE);
+    }
+
+    private void changeApprovedStatus(List<GameObjectDTO> objectsToApprove, ApprovedStatus status) {
+        List<Long> objectIds = objectsToApprove.stream()
+                .map(GameObjectDTO::getId)
+                .collect(Collectors.toList());
+        objectRepository.updateObjectStatusWithIdIn(objectIds, status);
     }
 }

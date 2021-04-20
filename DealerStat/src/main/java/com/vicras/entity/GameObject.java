@@ -1,6 +1,7 @@
 package com.vicras.entity;
 
 import com.vicras.dto.GameObjectDTO;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,6 +12,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @Builder
 @Data
+@AllArgsConstructor
 @Table(name = "game_object")
 @Entity
 public class GameObject extends BaseEntity {
@@ -22,7 +24,7 @@ public class GameObject extends BaseEntity {
 
     @Column(name = "approved_status")
     @Enumerated(EnumType.STRING)
-    private ApprovedStatus approvedStatus;
+    private ApprovedStatus approvedStatus = ApprovedStatus.SENT;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id", nullable = false)
@@ -35,6 +37,9 @@ public class GameObject extends BaseEntity {
             inverseJoinColumns = { @JoinColumn(name = "game_id") }
     )
     private Set<Game> games;
+
+    public GameObject() {
+    }
 
     public GameObjectDTO convert2DTO(){
         return GameObjectDTO.builder()

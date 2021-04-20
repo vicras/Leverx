@@ -27,7 +27,9 @@ public class GameObjectDTO {
         var gameObject = GameObject.builder()
                 .owner(userOwner)
                 .build();
-        return setFields(gameObject, gameService);
+        setFields(gameObject, gameService);
+        gameObject.setApprovedStatus(ApprovedStatus.SENT);
+        return gameObject;
     }
 
     public GameObject updateExistingObject(GameObject gameObject, GameService gameService) {
