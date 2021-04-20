@@ -11,10 +11,18 @@ import java.util.Optional;
 
 public interface CommentService {
     void addCommentForUserWithId(Long userId, CommentDTO commentDTO);
+
     void addCommentForNewUserWithObjects(NewUserWithCommentAndObjectsDTO dto);
 
     List<Comment> getCommentsForUserWithId(Long userId) throws UserNotExistException;
+
     List<Comment> getSortedCommentsForUserWithId(Long userId, Comparator<Comment> comparator, int limit);
 
     Optional<Comment> getCommentWithId(Long commentId);
+
+    List<Comment> getCommentsForApprove();
+
+    void approveObjects(List<Long> idsToApprove);
+
+    void declineObjects(List<Long> idsToDecline);
 }

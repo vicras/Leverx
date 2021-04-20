@@ -52,4 +52,12 @@ public class AuthorizationController {
         return new ResponseEntity<>("Password was successfully updated", HttpStatus.OK);
     }
 
+    @GetMapping("/check_code")
+    private ResponseEntity<String> isCodeValid(@RequestParam String code){
+        if(authService.isCodeActive(code)){
+            return new ResponseEntity<>("Code is active", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Code isn't active", HttpStatus.OK);
+    }
+
 }

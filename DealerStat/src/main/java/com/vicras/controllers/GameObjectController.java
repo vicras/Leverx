@@ -67,13 +67,13 @@ public class GameObjectController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("approve")
+    @PostMapping("/approve")
     private ResponseEntity<String> approveWithIds(@RequestBody List<Long> idsToApprove){
         gameObjectService.approveObjects(idsToApprove);
         return new ResponseEntity<>("Successfully approved", HttpStatus.OK);
     }
 
-    @PostMapping("decline")
+    @PostMapping("/decline")
     private ResponseEntity<String> declineWithIds(@RequestBody List<Long> idsToApprove){
         gameObjectService.declineObjects(idsToApprove);
         return new ResponseEntity<>("Successfully declined", HttpStatus.OK);

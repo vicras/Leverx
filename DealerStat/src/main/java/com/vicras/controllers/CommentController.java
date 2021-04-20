@@ -1,8 +1,10 @@
 package com.vicras.controllers;
 
 import com.vicras.dto.CommentDTO;
+import com.vicras.dto.GameObjectDTO;
 import com.vicras.dto.NewUserWithCommentAndObjectsDTO;
 import com.vicras.entity.Comment;
+import com.vicras.entity.GameObject;
 import com.vicras.service.CommentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -77,6 +79,24 @@ public class CommentController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/for_approve")
+    private List<CommentDTO> objectsForApprove(){
+        return commentService.getCommentsForApprove().stream()
+                .map(Comment::convert2DTO)
+                .collect(Collectors.toList());
+    }
+
+    @PostMapping("/approve")
+    private ResponseEntity<String> approveWithIds(@RequestBody List<Long> idsToApprove){
+        commentService.approveObjects(idsToApprove);
+        return new ResponseEntity<>("Successfully approved", HttpStatus.OK);
+    }
+
+    @PostMapping("/decline")
+    private ResponseEntity<String> declineWithIds(@RequestBody List<Long> idsToApprove){
+        commentService.declineObjects(idsToApprove);
+        return new ResponseEntity<>("Successfully declined", HttpStatus.OK);
+    }
 
 
 }

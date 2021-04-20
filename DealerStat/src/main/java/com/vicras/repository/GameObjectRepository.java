@@ -17,6 +17,6 @@ public interface GameObjectRepository extends JpaRepository<GameObject, Long> {
     List<GameObject> findAllByOwner(User owner);
     List<GameObject> findAllByApprovedStatusIn(List<ApprovedStatus> approvedStatus);
 
-    @Query("update User u set u.entityStatus =?2 where u.id in ?1")
+    @Query("update GameObject g set g.approvedStatus =?2 where g.id in ?1")
     void updateObjectStatusWithIdIn(Collection<Long> gameObjectsIds, ApprovedStatus status);
 }

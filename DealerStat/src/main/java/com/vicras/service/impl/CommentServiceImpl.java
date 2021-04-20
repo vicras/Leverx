@@ -2,14 +2,15 @@ package com.vicras.service.impl;
 
 import com.vicras.dto.CommentDTO;
 import com.vicras.dto.NewUserWithCommentAndObjectsDTO;
+import com.vicras.entity.ApprovedStatus;
 import com.vicras.entity.Comment;
 import com.vicras.entity.User;
 import com.vicras.exception.UserNotExistException;
 import com.vicras.repository.CommentRepository;
 import com.vicras.repository.UserRepository;
+import com.vicras.service.AuthenticationService;
 import com.vicras.service.CommentService;
 import com.vicras.service.GameObjectService;
-import com.vicras.service.AuthenticationService;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -82,5 +83,30 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Optional<Comment> getCommentWithId(Long commentId) {
         return commentRepository.findById(commentId);
+    }
+
+    @Override
+    public List<Comment> getCommentsForApprove(){
+        var statuses = List.of(ApprovedStatus.VIEWED,
+                ApprovedStatus.SENT);
+        return commentRepository.findAllByApprovedStatusIn(statuses).stream()
+                .peek(e -> updateAndSaveObjectApprovedStatus(e, ApprovedStatus.VIEWED))
+                .collect(Collectors.toList());
+    }
+
+
+    private void updateAndSaveObjectApprovedStatus(Comment object, ApprovedStatus status) {
+        object.setApprovedStatus(status);
+        commentRepository.save(object);
+    }
+
+    @Override
+    public void approveObjects(List<Long> idsToApprove) {
+        commentRepository.updateObjectStatusWithIdIn(idsToApprove, ApprovedStatus.APPROVED);
+    }
+
+    @Override
+    public void declineObjects(List<Long> idsToDecline) {
+        commentRepository.updateObjectStatusWithIdIn(idsToDecline, ApprovedStatus.DECLINE);
     }
 }
