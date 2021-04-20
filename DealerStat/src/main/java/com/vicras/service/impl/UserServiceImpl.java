@@ -2,12 +2,12 @@ package com.vicras.service.impl;
 
 import com.vicras.entity.EntityStatus;
 import com.vicras.entity.User;
+import com.vicras.exception.UserNotExistException;
 import com.vicras.repository.UserRepository;
 import com.vicras.service.UserService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +16,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserDetailServiceImpl implements UserService {
+public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
-    public UserDetailServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -58,6 +58,14 @@ public class UserDetailServiceImpl implements UserService {
             user.setEntityStatus(EntityStatus.DELETED);
             userRepository.save(user);
         });
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(
+                        ()->new UserNotExistException(String.format("User with email %s not found", email))
+                );
     }
 
     @Override

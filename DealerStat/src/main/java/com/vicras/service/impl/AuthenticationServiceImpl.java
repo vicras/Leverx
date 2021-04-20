@@ -5,6 +5,7 @@ import com.vicras.entity.EntityStatus;
 import com.vicras.entity.User;
 import com.vicras.exception.CodeNotFoundException;
 import com.vicras.exception.UserAlreadyExistException;
+import com.vicras.exception.UserNotExistException;
 import com.vicras.repository.UserCodeRepository;
 import com.vicras.repository.UserRepository;
 import com.vicras.security.UserConfirmMessage;
@@ -52,7 +53,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public User addNewUser(UserDTO userDTO){
+    public User addNewUser(UserDTO userDTO) {
         if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
             throw new UserAlreadyExistException(String.format("User with mail %s already exist", userDTO.getEmail()));
         }
@@ -81,7 +82,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         publisher.publishEvent(event);
     }
 
-    public void confirmUser(String code, User currentUser){
+    public void confirmUser(String code, User currentUser) {
         var userId = userCodeRepository.findWithCode(code)
                 .orElseThrow(CodeNotFoundException::new);
         if (isIdOfThisPerson(currentUser, userId)
@@ -101,12 +102,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
 
-    public void forgotPasswordWithEmail(String email) {
-        userRepository.findByEmail(email).ifPresent(user -> {
-            String code = generateCode(user);
-            publicUserCode(user, code);
-            publicResetPasswordConfirmMessageEvent(user, code);
-        });
+    public void forgotPasswordWithEmail(String email) throws UserNotExistException {
+        userRepository.findByEmail(email).ifPresentOrElse(user -> {
+                    String code = generateCode(user);
+                    publicUserCode(user, code);
+                    publicResetPasswordConfirmMessageEvent(user, code);
+                },
+                () -> {
+                    throw new UserNotExistException(String.format("User mail: %s not found", email));
+                });
 
     }
 

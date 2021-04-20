@@ -9,6 +9,8 @@ public interface UserService extends UserDetailsService {
 
     void deleteUsersById(Long userId);
 
+    User getUserByEmail(String email);
+
     List<User> getActiveUsers();
 
     List<User> getDeletedUsers();
