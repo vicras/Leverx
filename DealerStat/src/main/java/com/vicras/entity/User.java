@@ -50,7 +50,7 @@ public class User extends BaseEntity {
                 .password(PASSWORD_PLACEHOLDER)
                 .lastName(lastName)
                 .firstName(firstName)
-                .role(role.name())
+                .role(role)
                 .build();
     }
 }

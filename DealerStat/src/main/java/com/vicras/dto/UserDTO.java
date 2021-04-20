@@ -1,5 +1,6 @@
 package com.vicras.dto;
 
+import com.vicras.entity.Role;
 import lombok.Builder;
 import lombok.Value;
 
@@ -16,5 +17,5 @@ public class UserDTO {
     String firstName;
     String lastName;
     String password;
-    String role;
+    Role role;
 }
