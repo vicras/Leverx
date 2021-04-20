@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addNewUser(UserDTO userDTO) throws UserAlreadyExistException {
+    public User addNewUser(UserDTO userDTO) throws UserAlreadyExistException {
         if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
             throw new UserAlreadyExistException(String.format("User with mail %s already exist", userDTO.getEmail()));
         }
@@ -64,6 +64,7 @@ public class UserServiceImpl implements UserService {
         String code = generateCode(user);
         publicUserCode(user, code);
         publicNewUserConfirmMessageEvent(user, code);
+        return user;
     }
 
     private User convert2User(UserDTO userDTO) {

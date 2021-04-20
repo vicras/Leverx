@@ -8,7 +8,7 @@ import com.vicras.exception.UserAlreadyExistException;
 import java.util.List;
 
 public interface UserService {
-    void addNewUser(UserDTO user) throws UserAlreadyExistException;
+    User addNewUser(UserDTO user) throws UserAlreadyExistException;
 
     void confirmUser(String code, User currentUser) throws CodeNotFoundException;
 
