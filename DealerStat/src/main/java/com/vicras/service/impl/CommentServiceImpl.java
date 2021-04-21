@@ -4,7 +4,9 @@ import com.vicras.dto.CommentDTO;
 import com.vicras.dto.NewUserWithCommentAndObjectsDTO;
 import com.vicras.entity.ApprovedStatus;
 import com.vicras.entity.Comment;
+import com.vicras.entity.Role;
 import com.vicras.entity.User;
+import com.vicras.exception.ForbiddenAddCommentToAdminException;
 import com.vicras.exception.UserNotExistException;
 import com.vicras.repository.CommentRepository;
 import com.vicras.repository.UserRepository;
@@ -12,15 +14,19 @@ import com.vicras.service.AuthenticationService;
 import com.vicras.service.CommentService;
 import com.vicras.service.GameObjectService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
 public class CommentServiceImpl implements CommentService {
 
+    private final static Set<ApprovedStatus> NOT_APPROVED = Set.of( ApprovedStatus.SENT, ApprovedStatus.VIEWED);
     final private CommentRepository commentRepository;
     final private UserRepository userRepository;
 
@@ -39,6 +45,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void addCommentForNewUserWithObjects(NewUserWithCommentAndObjectsDTO dto) {
+        throwIfAdminRole(dto.getUser().getRole());
         var destUser = userService.addNewUser(dto.getUser());
         dto.getObjectDTOS().forEach(gameObjectDTO ->
             gameObjectService.addNewGameObjectForUser(gameObjectDTO, destUser)
@@ -49,6 +56,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void addCommentForUserWithId(Long userId, CommentDTO commentDTO) {
         User destUser = getUserIfExistById(userId);
+        throwIfAdminRole(destUser.getRole());
         addCommentForUser(commentDTO, destUser);
     }
 
@@ -60,7 +68,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<Comment> getCommentsForUserWithId(Long userId) throws UserNotExistException {
         User destUser = getUserIfExistById(userId);
-        return commentRepository.findAllByDestinationUser(destUser);
+        return commentRepository.findAllByDestinationUserAndApprovedStatusIn(destUser, Set.of(ApprovedStatus.APPROVED));
     }
 
     private User getUserIfExistById(Long userId) {
@@ -102,11 +110,17 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void approveObjects(List<Long> idsToApprove) {
-        commentRepository.updateObjectStatusWithIdIn(idsToApprove, ApprovedStatus.APPROVED);
+        commentRepository.updateObjectStatusWithIdIn(idsToApprove, ApprovedStatus.APPROVED, NOT_APPROVED);
     }
 
     @Override
     public void declineObjects(List<Long> idsToDecline) {
-        commentRepository.updateObjectStatusWithIdIn(idsToDecline, ApprovedStatus.DECLINE);
+        commentRepository.updateObjectStatusWithIdIn(idsToDecline, ApprovedStatus.DECLINE, NOT_APPROVED);
+    }
+
+    private void throwIfAdminRole(Role userRole){
+        if(userRole== Role.ADMIN){
+            throw new ForbiddenAddCommentToAdminException("Forbidden to add comment for admin");
+        }
     }
 }

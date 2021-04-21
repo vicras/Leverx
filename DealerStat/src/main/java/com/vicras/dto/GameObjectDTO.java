@@ -4,14 +4,16 @@ import com.vicras.entity.ApprovedStatus;
 import com.vicras.entity.GameObject;
 import com.vicras.entity.User;
 import com.vicras.service.GameService;
-import lombok.Builder;
-import lombok.Value;
+import lombok.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 
-@Value
+@Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class GameObjectDTO {
     Long id;
     LocalDateTime createdAt;
@@ -23,10 +25,12 @@ public class GameObjectDTO {
     Long ownerId;
     Set<Long> gameKeys;
 
+
     public GameObject convert2GameObject(User userOwner, GameService gameService) {
         var gameObject = GameObject.builder()
-                .owner(userOwner)
                 .build();
+
+        gameObject.setOwner(userOwner);
         setFields(gameObject, gameService);
         gameObject.setApprovedStatus(ApprovedStatus.SENT);
         return gameObject;

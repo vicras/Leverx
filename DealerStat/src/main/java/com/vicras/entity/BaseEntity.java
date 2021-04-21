@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
 //                )
 //        })
 public class BaseEntity implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", updatable = false, nullable = false, unique=true)
@@ -40,12 +41,16 @@ public class BaseEntity implements Serializable {
     protected LocalDateTime updatedAt;
 
     @PrePersist
-    public void setCreationDate() {
+    private void setCreationDate() {
         this.createdAt =LocalDateTime.now();
     }
 
+    public Long getId() {
+        return id;
+    }
+
     @PreUpdate
-    public void setChangeDate() {
+    private void setChangeDate() {
         this.updatedAt = LocalDateTime.now();
     }
 

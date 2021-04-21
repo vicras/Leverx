@@ -1,11 +1,12 @@
 package com.vicras.dto;
 
-import lombok.Builder;
-import lombok.Value;
+import lombok.*;
 
 import java.util.List;
 
-@Value
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class NewUserWithCommentAndObjectsDTO {
     UserDTO user;

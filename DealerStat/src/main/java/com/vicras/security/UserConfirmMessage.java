@@ -26,7 +26,7 @@ public class UserConfirmMessage{
     public static UserConfirmMessage getPasswordResetUserMessage(String receiverMail, String resetLink, String code){
         String subject = "Dealer Stat password reset message";
         String message = "To reset password make POST query by follow link: " + resetLink;
-        message += "with code" + code + " and new password body";
+        message += " with code: " + code + " and new password body";
         return new UserConfirmMessage(receiverMail, subject, message);
     }
 }

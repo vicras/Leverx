@@ -2,15 +2,20 @@ package com.vicras.entity;
 
 import com.vicras.dto.UserDTO;
 import lombok.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import java.util.Collections;
+import java.util.Objects;
 import java.util.Set;
 
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true,exclude = {"gameObjects", "comments"})
+@ToString(exclude = {"gameObjects", "comments"} )
 @Data
 @Entity
 @Builder
 @AllArgsConstructor
+@Transactional
 public class User extends BaseEntity {
 
     @Transient
@@ -32,10 +37,10 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "destinationUser", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "destinationUser")
     private Set<Comment> comments;
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "owner")
     private Set<GameObject> gameObjects;
 
     public User() {

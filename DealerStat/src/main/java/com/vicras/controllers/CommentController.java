@@ -1,10 +1,9 @@
 package com.vicras.controllers;
 
 import com.vicras.dto.CommentDTO;
-import com.vicras.dto.GameObjectDTO;
 import com.vicras.dto.NewUserWithCommentAndObjectsDTO;
 import com.vicras.entity.Comment;
-import com.vicras.entity.GameObject;
+import com.vicras.entity.Role;
 import com.vicras.service.CommentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +34,14 @@ public class CommentController {
                 .collect(Collectors.toList());
     }
 
+    @PostMapping("/user/{id}")
+    private ResponseEntity<String> addCommentForUserWithId(
+            @RequestBody CommentDTO commentDTO,
+            @PathVariable(name = "id") Long userId){
+        commentService.addCommentForUserWithId(userId, commentDTO);
+        return new ResponseEntity<>("add successfully", HttpStatus.OK);
+    }
+
     @GetMapping("/user/{id}/best")
     private List<CommentDTO> getBestCommentsAboutUserWithId(
             @PathVariable("id") long userId,
@@ -42,7 +49,7 @@ public class CommentController {
         int limit = Integer.parseInt(amount);
         List<Comment> comments = commentService.getSortedCommentsForUserWithId(
                 userId,
-                BY_SCORE_COMPARATOR,
+                BY_SCORE_REVERSE_COMPARATOR,
                 limit);
         return convert2DTOList(comments);
     }
@@ -54,7 +61,7 @@ public class CommentController {
         int limit = Integer.parseInt(amount);
         List<Comment> comments = commentService.getSortedCommentsForUserWithId(
                 userId,
-                BY_SCORE_REVERSE_COMPARATOR,
+                BY_SCORE_COMPARATOR,
                 limit);
         return convert2DTOList(comments);
     }
@@ -89,13 +96,13 @@ public class CommentController {
     @PostMapping("/approve")
     private ResponseEntity<String> approveWithIds(@RequestBody List<Long> idsToApprove){
         commentService.approveObjects(idsToApprove);
-        return new ResponseEntity<>("Successfully approved", HttpStatus.OK);
+        return new ResponseEntity<>("Comments which has no [approve/decline] status successfully approved", HttpStatus.OK);
     }
 
     @PostMapping("/decline")
     private ResponseEntity<String> declineWithIds(@RequestBody List<Long> idsToApprove){
         commentService.declineObjects(idsToApprove);
-        return new ResponseEntity<>("Successfully declined", HttpStatus.OK);
+        return new ResponseEntity<>("Comments which has no [approve/decline] status successfully declined", HttpStatus.OK);
     }
 
 

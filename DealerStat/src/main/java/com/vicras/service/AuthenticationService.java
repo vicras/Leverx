@@ -6,12 +6,10 @@ import com.vicras.exception.CodeNotFoundException;
 import com.vicras.exception.UserAlreadyExistException;
 import com.vicras.exception.UserNotExistException;
 
-import java.util.List;
-
 public interface AuthenticationService {
     User addNewUser(UserDTO user) throws UserAlreadyExistException;
 
-    void confirmUser(String code, User currentUser) throws CodeNotFoundException;
+    void confirmUser(String code) throws CodeNotFoundException;
 
     void forgotPasswordWithEmail(String email) throws UserNotExistException;
 

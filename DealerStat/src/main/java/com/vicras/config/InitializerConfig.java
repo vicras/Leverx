@@ -1,7 +1,5 @@
 package com.vicras.config;
 
-import com.vicras.config.DatabaseConfig;
-import com.vicras.config.WebConfig;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;

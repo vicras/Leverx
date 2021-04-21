@@ -8,8 +8,9 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"games", "owner"})
 @Builder
 @Data
 @AllArgsConstructor
@@ -26,11 +27,11 @@ public class GameObject extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ApprovedStatus approvedStatus = ApprovedStatus.SENT;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "owner_id", nullable = false)
+    @ManyToOne()
+    @JoinColumn(name = "owner_id", nullable = false )
     private User owner;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "game_object_game",
             joinColumns = { @JoinColumn(name = "game_object_id") },
@@ -42,6 +43,9 @@ public class GameObject extends BaseEntity {
     }
 
     public GameObjectDTO convert2DTO(){
+        var keys = games.stream()
+                .map(BaseEntity::getId)
+                .collect(Collectors.toSet());
         return GameObjectDTO.builder()
                 .id(id)
                 .createdAt(createdAt)
@@ -50,6 +54,7 @@ public class GameObject extends BaseEntity {
                 .description(description)
                 .approvedStatus(approvedStatus)
                 .ownerId(owner.id)
+                .gameKeys(keys)
                 .build();
     }
 }

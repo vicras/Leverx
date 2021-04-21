@@ -3,14 +3,15 @@ package com.vicras.dto;
 import com.vicras.entity.EntityStatus;
 import com.vicras.entity.Role;
 import com.vicras.entity.User;
-import lombok.Builder;
-import lombok.Value;
+import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 
-@Value
+@Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDTO {
     Long id;
     LocalDateTime createdAt;

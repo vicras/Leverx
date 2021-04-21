@@ -27,8 +27,8 @@ public class GameController {
     }
 
     @PostMapping()
-    private void addNewGame(@RequestBody String gameName) {
-        gameService.addNewGameWithName(gameName);
+    private void addNewGame(@RequestBody GameDTO gameDTO) {
+        gameService.addNewGameWithName(gameDTO.getTitle());
     }
 
 }

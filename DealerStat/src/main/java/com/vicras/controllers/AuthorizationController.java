@@ -2,14 +2,11 @@ package com.vicras.controllers;
 
 import com.vicras.dto.CodePasswordDTO;
 import com.vicras.dto.UserDTO;
-import com.vicras.entity.User;
 import com.vicras.service.AuthenticationService;
 import com.vicras.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
 
 @RestController()
 @RequestMapping("/auth")
@@ -29,15 +26,10 @@ public class AuthorizationController {
         return new ResponseEntity<>("Registered successfully, check your mail to confirm account",  HttpStatus.OK);
     }
 
-    @PostMapping("/confirm/{hash_code}")
-    private ResponseEntity<String> confirmUser(@PathVariable("hash_code") String code, Principal principal){
-        User currentUser = getCurrentUser(principal);
-        authService.confirmUser(code, currentUser);
+    @GetMapping("/confirm/{hash_code}")
+    private ResponseEntity<String> confirmUser(@PathVariable("hash_code") String code){
+        authService.confirmUser(code);
         return new ResponseEntity<>("Confirmed successfully",  HttpStatus.OK);
-    }
-
-    private User getCurrentUser(Principal principal) {
-        return userService.getUserByEmail(principal.getName());
     }
 
     @PostMapping("/forgot_password")

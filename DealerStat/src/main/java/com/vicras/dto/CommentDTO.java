@@ -3,12 +3,13 @@ package com.vicras.dto;
 import com.vicras.entity.ApprovedStatus;
 import com.vicras.entity.Comment;
 import com.vicras.entity.User;
-import lombok.Builder;
-import lombok.Value;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Value
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class CommentDTO {
     Long id;

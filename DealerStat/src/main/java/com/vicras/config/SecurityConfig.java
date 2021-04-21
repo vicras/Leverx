@@ -21,9 +21,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userService;
-    private final String[] AUTHORITY_REQUIRED = {
+    private final String[] AUTHORITY_REQUIRED_TRADER = {
             "/object",
-            "/object/**"
+            "/object/\\d+",
+            "/object/my",
+
+    };
+
+    private final String[] AUTHORITY_REQUIRED_ADMIN = {
+            "/object/for_approve",
+            "/object/approve",
+            "/object/decline",
+            "/comment/for_approve",
+            "/comment/approve",
+            "/comment/decline",
 
     };
 
@@ -35,9 +46,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/object").not().authenticated()
-                .antMatchers(AUTHORITY_REQUIRED).hasAuthority(Role.TRADER.name())
+                .antMatchers(HttpMethod.GET, "/object").permitAll()
+                .antMatchers(AUTHORITY_REQUIRED_ADMIN).hasAuthority(Role.ADMIN.name())
+                .antMatchers(AUTHORITY_REQUIRED_TRADER).hasAuthority(Role.TRADER.name())
                 .and()
                 .formLogin()
                 .and()

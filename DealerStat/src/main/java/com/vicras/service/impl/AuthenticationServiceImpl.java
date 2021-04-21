@@ -17,6 +17,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -26,13 +27,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final static TimeUnit TIMEOUT_TIME_UNIT = TimeUnit.HOURS;
 
     @Value("${link.expire.timeinhours}")
-    private static long TIMEOUT;
+    private long TIMEOUT;
 
     @Value("${new.user.confirm.link}")
-    private static String NEW_USER_CONFIRM_LINK;
+    private String NEW_USER_CONFIRM_LINK;
 
     @Value("${reset.pass.confirm.link}")
-    private static String RESET_PASS_CONFIRM_LINK;
+    private String RESET_PASS_CONFIRM_LINK;
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -82,25 +83,25 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         publisher.publishEvent(event);
     }
 
-    public void confirmUser(String code, User currentUser) {
+    public void confirmUser(String code) {
         var userId = userCodeRepository.findWithCode(code)
                 .orElseThrow(CodeNotFoundException::new);
-        if (isIdOfThisPerson(currentUser, userId)
-                && isUserInactive(currentUser)) {
-
-            currentUser.setEntityStatus(EntityStatus.ACTIVE);
-            userRepository.save(currentUser);
-        }
-    }
-
-    private boolean isIdOfThisPerson(User user, Long id) {
-        return user.getId().equals(id);
+        userRepository.findById(userId).ifPresent(user -> {
+            if (isUserInactive(user)) {
+                activateUser(user);
+            }
+        });
+        userCodeRepository.deleteWithCode(code);
     }
 
     private boolean isUserInactive(User user) {
         return user.getEntityStatus() == EntityStatus.INACTIVE;
     }
 
+    private void activateUser(User user) {
+        user.setEntityStatus(EntityStatus.ACTIVE);
+        userRepository.save(user);
+    }
 
     public void forgotPasswordWithEmail(String email) throws UserNotExistException {
         userRepository.findByEmail(email).ifPresentOrElse(user -> {
@@ -129,7 +130,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             user.setPassword(ePassword);
             userRepository.save(user);
         });
-
+        userCodeRepository.deleteWithCode(code);
     }
 
     public boolean isCodeActive(String code) {
