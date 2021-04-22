@@ -18,6 +18,11 @@ public class InitializerConfig implements WebApplicationInitializer {
         sc.addListener(new ContextLoaderListener(root));
         root.register(DatabaseConfig.class);
         root.register(WebConfig.class);
+        root.register(MailConfig.class);
+        root.register(AsyncConfig.class);
+        root.register(RedisConfig.class);
+        root.register(SecurityConfig.class);
+
         ServletRegistration.Dynamic appServlet = sc.addServlet("springServlet",
                 new DispatcherServlet(new GenericWebApplicationContext()));
         appServlet.setLoadOnStartup(1);
