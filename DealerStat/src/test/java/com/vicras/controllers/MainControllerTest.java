@@ -52,4 +52,11 @@ public class MainControllerTest {
                 .andDo(print())
                 .andExpect(content().string(containsString("Welcome to RestTemplate Example.")));
     }
+
+    @Test
+    public void testHello() throws Exception {
+        this.mockMvc.perform(get("/hello/{user}", "viktor"))
+                .andDo(print())
+                .andExpect(content().string(containsString("hello viktor")));
+    }
 }

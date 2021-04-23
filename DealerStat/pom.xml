@@ -12,13 +12,13 @@
 
     <properties>
         <java.version>11</java.version>
-        <springframework.version>5.3.6</springframework.version>
+<!--        <springframework.version>5.3.6</springframework.version>-->
+        <springframework.version>5.2.10.RELEASE</springframework.version>
         <springsecurity.version>5.4.6</springsecurity.version>
         <springdata.version>2.3.9.RELEASE</springdata.version>
         <hibernate.version>5.4.30.Final</hibernate.version>
         <jackson.version>2.12.3</jackson.version>
-        <!--        <hibernate.version>4.2.8.Final</hibernate.version>-->
-        <!--        <springframework.version>4.1.4.RELEASE</springframework.version>-->
+
     </properties>
     <dependencies>
 
