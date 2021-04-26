@@ -23,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userService;
     private final String[] AUTHORITY_REQUIRED_TRADER = {
             "/object",
-            "/object/\\d+",
+            "/object/{\\d+}",
             "/object/my",
 
     };
