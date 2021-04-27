@@ -98,6 +98,7 @@ public class AuthorizationControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
 
+
         Assertions.assertNotNull(userRepository.findByEmail("victor.graskov@gmail.com").get());
     }
 

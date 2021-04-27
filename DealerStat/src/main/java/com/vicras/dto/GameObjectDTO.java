@@ -32,7 +32,6 @@ public class GameObjectDTO {
 
         gameObject.setOwner(userOwner);
         setFields(gameObject, gameService);
-        gameObject.setApprovedStatus(ApprovedStatus.SENT);
         return gameObject;
     }
 
@@ -42,8 +41,8 @@ public class GameObjectDTO {
 
     private GameObject setFields(GameObject gameObject, GameService gameService) {
         gameObject.setTitle(title);
+        gameObject.setApprovedStatus(ApprovedStatus.SENT);
         gameObject.setDescription(description);
-        gameObject.setApprovedStatus(approvedStatus);
         gameObject.setGames(gameService.getGamesByKeys(gameKeys));
         return gameObject;
     }
