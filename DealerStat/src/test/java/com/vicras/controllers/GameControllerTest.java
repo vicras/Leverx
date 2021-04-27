@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(classes = {WebConfig.class})
 @WebAppConfiguration
 @Sql(scripts = "game-db-init.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(scripts = "game-db-clean.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+@Sql(scripts = "db-clean.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 @TestExecutionListeners( {
         DependencyInjectionTestExecutionListener.class,
         SqlScriptsTestExecutionListener.class
@@ -56,7 +56,8 @@ public class GameControllerTest {
     public void testGetGame() throws Exception {
         this.mockMvc.perform(get("/game"))
                 .andDo(print())
-                .andExpect(content().string(containsString("[{\"id\":1,\"title\":\"CALL OF DUTY\"}]")));
+                .andExpect(content().string(
+                        containsString("[{\"id\":1,\"title\":\"CALL OF DUTY\"},{\"id\":2,\"title\":\"METRO\"}]")));
     }
 
     @Test

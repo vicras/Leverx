@@ -18,6 +18,8 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     List<Comment> findAllByApprovedStatusIn(List<ApprovedStatus> statuses);
 
+    Optional<Comment> findByMessage(String message);
+
     @Modifying
     @Query("update Comment c set c.approvedStatus =?2 where c.id in ?1 and c.approvedStatus in ?3")
     void updateObjectStatusWithIdIn(List<Long> idsToApprove, ApprovedStatus approved, Collection<ApprovedStatus> oldStatus);

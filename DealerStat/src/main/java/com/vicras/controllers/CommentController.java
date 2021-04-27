@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,6 +48,7 @@ public class CommentController {
             @PathVariable("id") long userId,
             @RequestParam(required = false, defaultValue = DEFAULT_AMOUNTS) String amount) {
         int limit = Integer.parseInt(amount);
+        if(limit<0) return Collections.emptyList();
         List<Comment> comments = commentService.getSortedCommentsForUserWithId(
                 userId,
                 BY_SCORE_REVERSE_COMPARATOR,
@@ -59,6 +61,7 @@ public class CommentController {
             @PathVariable("id") long userId,
             @RequestParam(required = false, defaultValue = DEFAULT_AMOUNTS) String amount) {
         int limit = Integer.parseInt(amount);
+        if(limit<0) return Collections.emptyList();
         List<Comment> comments = commentService.getSortedCommentsForUserWithId(
                 userId,
                 BY_SCORE_COMPARATOR,

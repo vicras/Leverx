@@ -56,7 +56,7 @@ public class GameObjectController {
     private ResponseEntity<String> deleteMyGameObjectById(@PathVariable long id, Principal principal) {
         User currentUser = getUserByPrincipal(principal);
         gameObjectService.deleteGameObjectForUserOwner(id, currentUser);
-        return new ResponseEntity<>("Object deleted successfully!", HttpStatus.OK);
+        return new ResponseEntity<>("Object, if it exist, deleted successfully!", HttpStatus.OK);
     }
 
     @GetMapping("/my")

@@ -9,10 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Repository
 public interface GameObjectRepository extends JpaRepository<GameObject, Long> {
@@ -21,6 +18,8 @@ public interface GameObjectRepository extends JpaRepository<GameObject, Long> {
     List<GameObject> findAllByApprovedStatusIn(List<ApprovedStatus> approvedStatus);
 
     List<GameObject> findAllByEntityStatusIsAndApprovedStatusIs(EntityStatus entityStatus, ApprovedStatus approvedStatus);
+
+    Optional<GameObject> findByTitle(String title);
 
     @Modifying
     @Query("update GameObject g set g.entityStatus =?2 where g.id = ?1")
