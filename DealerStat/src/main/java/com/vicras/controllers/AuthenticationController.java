@@ -25,7 +25,7 @@ public class AuthenticationController {
     }
 
 
-    @PostMapping("/login")
+    @GetMapping("/login")
     private ResponseEntity<String> login(@RequestBody EmailPasswordDTO emailPasswordDTO, HttpServletResponse response) {
         try {
             String token = authService.login(emailPasswordDTO.getEmail(), emailPasswordDTO.getPassword());

@@ -62,21 +62,20 @@ public class AuthenticationControllerTest {
 
     @Test
     public void correctLogin() throws Exception {
-        mockMvc.perform(SecurityMockMvcRequestBuilders.formLogin()
-                .user("admin@gmail.com")
-                .password("admin"))
+        mockMvc.perform(get("/auth/login")
+                .content("{\"email\":\"admin@gmail.com\", \"password\":\"admin\"}")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/"));
+                .andExpect(status().isOk());
     }
 
     @Test
     public void badCredentials() throws Exception {
-        mockMvc.perform(SecurityMockMvcRequestBuilders.formLogin()
-                .user("admin@gmail.com")
-                .password("admin1"))
+        mockMvc.perform(get("/auth/login")
+                .content("{\"email\":\"name\", \"password\":\"password\"}")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(redirectedUrl("/login?error"));
+                .andExpect(status().isUnauthorized());
     }
 
     @Test
@@ -266,8 +265,8 @@ public class AuthenticationControllerTest {
         this.mockMvc.perform(method
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("http://localhost/login"));
+                .andExpect(status().isForbidden());
+//                .andExpect(redirectedUrl("http://localhost/login"));
     }
 
 
