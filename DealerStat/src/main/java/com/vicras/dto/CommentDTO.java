@@ -3,7 +3,10 @@ package com.vicras.dto;
 import com.vicras.entity.ApprovedStatus;
 import com.vicras.entity.Comment;
 import com.vicras.entity.User;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -21,7 +24,7 @@ public class CommentDTO {
     ApprovedStatus approvedStatus;
     Long destinationUserId;
 
-    public Comment convert2Comment(User destinationUser){
+    public Comment convert2Comment(User destinationUser) {
         return Comment.builder()
                 .mark(mark)
                 .message(message)

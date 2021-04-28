@@ -4,8 +4,10 @@ import com.vicras.entity.ApprovedStatus;
 import com.vicras.entity.GameObject;
 import com.vicras.entity.User;
 import com.vicras.service.GameService;
-import lombok.*;
-import org.springframework.transaction.annotation.Transactional;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Set;

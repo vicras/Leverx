@@ -3,7 +3,6 @@ package com.vicras.controllers;
 import com.vicras.dto.CommentDTO;
 import com.vicras.dto.NewUserWithCommentAndObjectsDTO;
 import com.vicras.entity.Comment;
-import com.vicras.entity.Role;
 import com.vicras.service.CommentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +37,7 @@ public class CommentController {
     @PostMapping("/user/{id}")
     private ResponseEntity<String> addCommentForUserWithId(
             @RequestBody CommentDTO commentDTO,
-            @PathVariable(name = "id") Long userId){
+            @PathVariable(name = "id") Long userId) {
         commentService.addCommentForUserWithId(userId, commentDTO);
         return new ResponseEntity<>("add successfully", HttpStatus.OK);
     }
@@ -48,7 +47,7 @@ public class CommentController {
             @PathVariable("id") long userId,
             @RequestParam(required = false, defaultValue = DEFAULT_AMOUNTS) String amount) {
         int limit = Integer.parseInt(amount);
-        if(limit<0) return Collections.emptyList();
+        if (limit < 0) return Collections.emptyList();
         List<Comment> comments = commentService.getSortedCommentsForUserWithId(
                 userId,
                 BY_SCORE_REVERSE_COMPARATOR,
@@ -61,7 +60,7 @@ public class CommentController {
             @PathVariable("id") long userId,
             @RequestParam(required = false, defaultValue = DEFAULT_AMOUNTS) String amount) {
         int limit = Integer.parseInt(amount);
-        if(limit<0) return Collections.emptyList();
+        if (limit < 0) return Collections.emptyList();
         List<Comment> comments = commentService.getSortedCommentsForUserWithId(
                 userId,
                 BY_SCORE_COMPARATOR,
@@ -78,7 +77,7 @@ public class CommentController {
     }
 
     @PostMapping("/")
-    private ResponseEntity<String> addCommentForNewUser(@RequestBody NewUserWithCommentAndObjectsDTO dto){
+    private ResponseEntity<String> addCommentForNewUser(@RequestBody NewUserWithCommentAndObjectsDTO dto) {
         commentService.addCommentForNewUserWithObjects(dto);
         return new ResponseEntity<>("add successfully", HttpStatus.OK);
     }
@@ -90,20 +89,20 @@ public class CommentController {
     }
 
     @GetMapping("/for_approve")
-    private List<CommentDTO> objectsForApprove(){
+    private List<CommentDTO> objectsForApprove() {
         return commentService.getCommentsForApprove().stream()
                 .map(Comment::convert2DTO)
                 .collect(Collectors.toList());
     }
 
     @PostMapping("/approve")
-    private ResponseEntity<String> approveWithIds(@RequestBody List<Long> idsToApprove){
+    private ResponseEntity<String> approveWithIds(@RequestBody List<Long> idsToApprove) {
         commentService.approveObjects(idsToApprove);
         return new ResponseEntity<>("Comments which has no [approve/decline] status successfully approved", HttpStatus.OK);
     }
 
     @PostMapping("/decline")
-    private ResponseEntity<String> declineWithIds(@RequestBody List<Long> idsToApprove){
+    private ResponseEntity<String> declineWithIds(@RequestBody List<Long> idsToApprove) {
         commentService.declineObjects(idsToApprove);
         return new ResponseEntity<>("Comments which has no [approve/decline] status successfully declined", HttpStatus.OK);
     }

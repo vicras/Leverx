@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class CommentServiceImpl implements CommentService {
 
-    private final static Set<ApprovedStatus> NOT_APPROVED = Set.of( ApprovedStatus.SENT, ApprovedStatus.VIEWED);
+    private final static Set<ApprovedStatus> NOT_APPROVED = Set.of(ApprovedStatus.SENT, ApprovedStatus.VIEWED);
     final private CommentRepository commentRepository;
     final private UserRepository userRepository;
 
@@ -48,7 +48,7 @@ public class CommentServiceImpl implements CommentService {
         throwIfAdminRole(dto.getUser().getRole());
         var destUser = userService.addNewUser(dto.getUser());
         dto.getObjectDTOS().forEach(gameObjectDTO ->
-            gameObjectService.addNewGameObjectForUser(gameObjectDTO, destUser)
+                gameObjectService.addNewGameObjectForUser(gameObjectDTO, destUser)
         );
         addCommentForUser(dto.getCommentDTO(), destUser);
     }
@@ -94,7 +94,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> getCommentsForApprove(){
+    public List<Comment> getCommentsForApprove() {
         var statuses = List.of(ApprovedStatus.VIEWED,
                 ApprovedStatus.SENT);
         return commentRepository.findAllByApprovedStatusIn(statuses).stream()
@@ -118,8 +118,8 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.updateObjectStatusWithIdIn(idsToDecline, ApprovedStatus.DECLINE, NOT_APPROVED);
     }
 
-    private void throwIfAdminRole(Role userRole){
-        if(userRole== Role.ADMIN){
+    private void throwIfAdminRole(Role userRole) {
+        if (userRole == Role.ADMIN) {
             throw new ForbiddenAddCommentToAdminException("Forbidden to add comment for admin");
         }
     }

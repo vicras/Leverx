@@ -17,10 +17,10 @@ import java.util.stream.Collectors;
 @Table(name = "game_object")
 @Entity
 public class GameObject extends BaseEntity {
-    @Column(name = "title" , nullable = false)
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "description" , nullable = false)
+    @Column(name = "description", nullable = false)
     private String description;
 
     @Column(name = "approved_status")
@@ -28,21 +28,21 @@ public class GameObject extends BaseEntity {
     private ApprovedStatus approvedStatus = ApprovedStatus.SENT;
 
     @ManyToOne()
-    @JoinColumn(name = "owner_id", nullable = false )
+    @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "game_object_game",
-            joinColumns = { @JoinColumn(name = "game_object_id") },
-            inverseJoinColumns = { @JoinColumn(name = "game_id") }
+            joinColumns = {@JoinColumn(name = "game_object_id")},
+            inverseJoinColumns = {@JoinColumn(name = "game_id")}
     )
     private Set<Game> games;
 
     public GameObject() {
     }
 
-    public GameObjectDTO convert2DTO(){
+    public GameObjectDTO convert2DTO() {
         var keys = games.stream()
                 .map(BaseEntity::getId)
                 .collect(Collectors.toSet());

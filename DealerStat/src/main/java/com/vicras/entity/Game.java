@@ -14,9 +14,9 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Builder(access = AccessLevel.PUBLIC)
-public class Game extends BaseEntity{
+public class Game extends BaseEntity {
 
-    @Column(name = "title" , nullable = false)
+    @Column(name = "title", nullable = false)
     String title;
 
     @ManyToMany(mappedBy = "games")
@@ -25,7 +25,7 @@ public class Game extends BaseEntity{
     public Game() {
     }
 
-    public GameDTO convert2DTO(){
+    public GameDTO convert2DTO() {
         return new GameDTO(id, title);
     }
 }

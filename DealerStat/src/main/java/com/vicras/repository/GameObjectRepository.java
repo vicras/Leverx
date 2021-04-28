@@ -9,7 +9,9 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface GameObjectRepository extends JpaRepository<GameObject, Long> {
@@ -23,7 +25,7 @@ public interface GameObjectRepository extends JpaRepository<GameObject, Long> {
 
     @Modifying
     @Query("update GameObject g set g.entityStatus =?2 where g.id = ?1")
-    void updateEntityStatusById(Long objectId,EntityStatus status);
+    void updateEntityStatusById(Long objectId, EntityStatus status);
 
     @Modifying
     @Query("update GameObject g set g.approvedStatus =?2 where g.id in ?1 and g.approvedStatus in ?3")

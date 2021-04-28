@@ -1,4 +1,4 @@
-package com.vicras.security;
+package com.vicras.event;
 
 import org.springframework.context.event.EventListener;
 import org.springframework.mail.SimpleMailMessage;
@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MessageEventListener{
+public class MessageEventListener {
 
     final
     JavaMailSender sender;
@@ -23,7 +23,7 @@ public class MessageEventListener{
         sendMessage(message);
     }
 
-    private void sendMessage(SimpleMailMessage message){
+    private void sendMessage(SimpleMailMessage message) {
         sender.send(message);
     }
 

@@ -3,7 +3,10 @@ package com.vicras.dto;
 import com.vicras.entity.EntityStatus;
 import com.vicras.entity.Role;
 import com.vicras.entity.User;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;

@@ -3,12 +3,12 @@ package com.vicras.service.impl;
 import com.vicras.dto.UserDTO;
 import com.vicras.entity.EntityStatus;
 import com.vicras.entity.User;
+import com.vicras.event.UserConfirmMessage;
 import com.vicras.exception.CodeNotFoundException;
 import com.vicras.exception.UserAlreadyExistException;
 import com.vicras.exception.UserNotExistException;
 import com.vicras.repository.UserCodeRepository;
 import com.vicras.repository.UserRepository;
-import com.vicras.security.UserConfirmMessage;
 import com.vicras.security.jwt.JwtTokenProvider;
 import com.vicras.service.AuthenticationService;
 import com.vicras.service.CodeGeneratorService;
@@ -59,7 +59,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public String login(String email, String password) throws UserNotExistException {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(UserNotExistException::new);
-        if(!passwordEncoder.matches(password, user.getPassword())){
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new UserNotExistException();
         }
         return jwtTokenProvider.createToken(user);

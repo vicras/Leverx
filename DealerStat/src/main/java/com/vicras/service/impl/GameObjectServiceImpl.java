@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class GameObjectServiceImpl implements GameObjectService {
 
-    private final static Set<ApprovedStatus> NOT_APPROVED = Set.of( ApprovedStatus.SENT, ApprovedStatus.VIEWED);
+    private final static Set<ApprovedStatus> NOT_APPROVED = Set.of(ApprovedStatus.SENT, ApprovedStatus.VIEWED);
     private final GameObjectRepository objectRepository;
     private final GameService gameService;
 

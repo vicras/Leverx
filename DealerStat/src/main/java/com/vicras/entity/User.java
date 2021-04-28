@@ -5,12 +5,10 @@ import lombok.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
-import java.util.Collections;
-import java.util.Objects;
 import java.util.Set;
 
-@EqualsAndHashCode(callSuper = true,exclude = {"gameObjects", "comments"})
-@ToString(exclude = {"gameObjects", "comments"} )
+@EqualsAndHashCode(callSuper = true, exclude = {"gameObjects", "comments"})
+@ToString(exclude = {"gameObjects", "comments"})
 @Data
 @Entity
 @Builder

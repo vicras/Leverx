@@ -27,7 +27,7 @@ public class BaseEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", updatable = false, nullable = false, unique=true)
+    @Column(name = "id", updatable = false, nullable = false, unique = true)
     protected Long id;
 
     @Column(name = "entity_status")
@@ -42,7 +42,7 @@ public class BaseEntity implements Serializable {
 
     @PrePersist
     private void setCreationDate() {
-        this.createdAt =LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
     }
 
     public Long getId() {

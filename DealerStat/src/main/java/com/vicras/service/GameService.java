@@ -7,6 +7,8 @@ import java.util.Set;
 
 public interface GameService {
     List<Game> getAllGames();
+
     void addNewGameWithName(String name);
+
     Set<Game> getGamesByKeys(Set<Long> keys);
 }
