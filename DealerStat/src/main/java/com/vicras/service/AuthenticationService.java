@@ -7,6 +7,9 @@ import com.vicras.exception.UserAlreadyExistException;
 import com.vicras.exception.UserNotExistException;
 
 public interface AuthenticationService {
+
+    String login(String email, String password) throws UserNotExistException;
+
     User addNewUser(UserDTO user) throws UserAlreadyExistException;
 
     void confirmUser(String code) throws CodeNotFoundException;

@@ -9,6 +9,7 @@ import com.vicras.exception.UserNotExistException;
 import com.vicras.repository.UserCodeRepository;
 import com.vicras.repository.UserRepository;
 import com.vicras.security.UserConfirmMessage;
+import com.vicras.security.jwt.JwtTokenProvider;
 import com.vicras.service.AuthenticationService;
 import com.vicras.service.CodeGeneratorService;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +18,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -40,17 +40,29 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final ApplicationEventPublisher publisher;
     private final CodeGeneratorService codeGeneratorService;
     private final UserCodeRepository userCodeRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
     public AuthenticationServiceImpl(UserRepository userRepository,
                                      PasswordEncoder passwordEncoder,
                                      ApplicationEventPublisher publisher,
                                      CodeGeneratorService codeGeneratorService,
-                                     UserCodeRepository userCodeRepository) {
+                                     UserCodeRepository userCodeRepository, JwtTokenProvider jwtTokenProvider) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.publisher = publisher;
         this.codeGeneratorService = codeGeneratorService;
         this.userCodeRepository = userCodeRepository;
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
+
+    @Override
+    public String login(String email, String password) throws UserNotExistException {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(UserNotExistException::new);
+        if(!passwordEncoder.matches(password, user.getPassword())){
+            throw new UserNotExistException();
+        }
+        return jwtTokenProvider.createToken(user);
     }
 
     @Override

@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 @Sql(scripts = {"user-db-init.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(scripts = "db-clean.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-public class AuthorizationControllerTest {
+public class AuthenticationControllerTest {
 
     @Autowired
     private WebApplicationContext context;

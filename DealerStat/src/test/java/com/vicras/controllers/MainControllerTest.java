@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { WebConfig.class })
+@ContextConfiguration(classes = {WebConfig.class})
 @WebAppConfiguration
 public class MainControllerTest {
     @Autowired
@@ -43,7 +43,6 @@ public class MainControllerTest {
 
         assertNotNull(servletContext);
         assertTrue(servletContext instanceof MockServletContext);
-        assertNotNull(webApplicationContext.getBean("daoAuthenticationProvider"));
     }
 
     @Test
