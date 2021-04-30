@@ -1,15 +1,13 @@
 package com.vicras.controllers;
 
-import com.vicras.dto.CodePasswordDTO;
 import com.vicras.dto.EmailPasswordDTO;
 import com.vicras.dto.UserDTO;
+import com.vicras.exception.CannotSendMessageException;
 import com.vicras.service.AuthenticationService;
 import com.vicras.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
 
 @RestController()
 @RequestMapping("/auth")
@@ -26,7 +24,7 @@ public class AuthenticationController {
 
 
     @GetMapping("/login")
-    private ResponseEntity<String> login(@RequestBody EmailPasswordDTO emailPasswordDTO, HttpServletResponse response) {
+    private ResponseEntity<String> login(@RequestBody EmailPasswordDTO emailPasswordDTO) {
         try {
             String token = authService.login(emailPasswordDTO.getEmail(), emailPasswordDTO.getPassword());
             return new ResponseEntity<>("JWT: " + token, HttpStatus.OK);
@@ -55,8 +53,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/reset_password")
-    private ResponseEntity<String> updatePasswordWithCode(@RequestBody CodePasswordDTO dto) {
-        authService.updatePasswordByCode(dto.getCode(), dto.getPassword());
+    private ResponseEntity<String> updatePasswordWithCode(@RequestParam String code, @RequestParam String password) {
+        authService.updatePasswordByCode(code, password);
         return new ResponseEntity<>("Password was successfully updated", HttpStatus.OK);
     }
 
@@ -66,6 +64,13 @@ public class AuthenticationController {
             return new ResponseEntity<>("Code is active", HttpStatus.OK);
         }
         return new ResponseEntity<>("Code isn't active", HttpStatus.OK);
+    }
+
+    @ExceptionHandler(CannotSendMessageException.class)
+    public ResponseEntity<String> handleException(CannotSendMessageException e) {
+        return new ResponseEntity<>(
+                String.format("Server couldn't process request with reason %s, contact with admin", e.getMessage()),
+                HttpStatus.OK);
     }
 
 }

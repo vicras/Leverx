@@ -89,9 +89,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     private void publicNewUserConfirmMessageEvent(User user, String code) {
-        String confirmLink = NEW_USER_CONFIRM_LINK + code;
         var event = UserConfirmMessage
-                .getNewUserMessage(user.getEmail(), confirmLink);
+                .getNewUserMessage(user, NEW_USER_CONFIRM_LINK, code);
         publisher.publishEvent(event);
     }
 
@@ -129,7 +128,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private void publicResetPasswordConfirmMessageEvent(User user, String code) {
         var event = UserConfirmMessage
-                .getPasswordResetUserMessage(user.getEmail(), RESET_PASS_CONFIRM_LINK, code);
+                .getPasswordResetUserMessage(user, RESET_PASS_CONFIRM_LINK, code);
         publisher.publishEvent(event);
     }
 

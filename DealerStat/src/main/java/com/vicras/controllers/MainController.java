@@ -13,8 +13,6 @@ public class MainController {
     @GetMapping("/")
     public String welcome() {
         log.info("main method of main controller");
-        log.error("main method of main controller");
-        log.warn("main method of main controller");
         return "Welcome to RestTemplate Example.";
     }
 

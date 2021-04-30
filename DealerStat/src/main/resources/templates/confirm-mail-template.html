@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Confirm mail message</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+<p th:text="'Hello Dear ' + ${firstName}"></p>
+
+<p>
+    You have been successfully sign in to the <b>DealerStat</b>
+</p>
+<p>
+    To confirm registration on the Dealer Stat site follow the
+    <a th:href="@{{base}/auth/confirm/{code}(code = ${code}, base = ${baseUrl})}">link</a>
+</p>
+<p>
+    If link couldn't work follow the address <i th:text="${baseUrl + '/auth/confirm/' + code}"> </i>
+</p>
+<p>
+    Don't do anything if it wasn't you.
+</p>
+</body>
+</html>

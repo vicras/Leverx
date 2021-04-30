@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Confirm mail message</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+<p th:text="'Hello Dear ' + ${firstName}"></p>
+<p>
+    Message help you to reset password to <b>Dealer Stat</b> service.
+</p>
+
+<p>
+    To reset password, input new password on the form and click <b>submit</b>
+</p>
+
+<form th:action="@{{base}/auth/reset_password(base = ${baseUrl})}" method="post">
+
+    <label>
+        <input type="hidden" name="code" th:value="${code}"/>
+    </label>
+
+    <label>
+        <p>New password:</p> <input type="text" name="password"/>
+    </label>
+
+    <p><input type="submit" value="Submit"/></p>
+</form>
+
+<p>
+    If form didn't work make POST request for address <i th:text="${baseUrl + '/auth/reset_password/' + code}"> </i>
+    <br>
+    With request param:
+    code=<span th:text="${code}"></span>&password=newPassword
+</p>
+<p>
+    Don't do anything if it wasn't you.
+</p>
+</body>
+</html>
