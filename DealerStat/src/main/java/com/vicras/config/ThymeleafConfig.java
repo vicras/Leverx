@@ -26,7 +26,7 @@ public class ThymeleafConfig {
     @Bean
     public ITemplateResolver stringTemplateResolver() {
         final StringTemplateResolver templateResolver = new StringTemplateResolver();
-        templateResolver.setTemplateMode("HTML5");
+        templateResolver.setTemplateMode("HTML");
         templateResolver.setCacheable(false);
         return templateResolver;
     }

@@ -1,0 +1,43 @@
+version: "3"
+services:
+  dealer-stat:
+    container_name: dealer-stat
+    build: .
+    depends_on:
+      - mysqldb
+      - redisdb
+    links:
+      - mysqldb:mysqldb
+      - redisdb:redisdb
+    networks:
+      - dealer-stat-network
+    ports:
+    - 3333:8080
+    expose:
+      - 587
+
+  mysqldb:
+    container_name: mysql-for-dealer-stat
+    image: mysql:5.7.34
+    expose:
+      - 3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=dealer_stat_schemas
+    volumes:
+      - ./docs/scripts:/docker-entrypoint-initdb.d
+    restart: always
+    networks:
+      - dealer-stat-network
+
+  redisdb:
+    container_name: redis-for-dealer-stat
+    image: redis
+    networks:
+      - dealer-stat-network
+    restart: always
+
+networks:
+    dealer-stat-network:
+      driver: bridge
+

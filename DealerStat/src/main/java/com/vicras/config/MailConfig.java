@@ -29,6 +29,7 @@ public class MailConfig {
     private final String SMTP_ENABLED = "mail.smtp.starttls.enable";
     private final String SMTP_AUTH = "mail.smtp.auth";
     private final String TRANSPORT_PROTOCOL = "mail.transport.protocol";
+    private final String MAIL_TRUST = "mail.smtp.ssl.trust";
 
     public MailConfig(Environment env) {
         this.env = env;
@@ -48,6 +49,7 @@ public class MailConfig {
         props.put(SMTP_AUTH, env.getProperty(SMTP_AUTH));
         props.put(SMTP_ENABLED, env.getProperty(SMTP_ENABLED));
         props.put(DEBUG, env.getProperty(DEBUG));
+        props.put(MAIL_TRUST, env.getProperty(MAIL_TRUST));
 
         return mailSender;
     }
