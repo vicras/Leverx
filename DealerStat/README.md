@@ -11,7 +11,7 @@ Several roles are used to work with the service:
 
 - Admin
 - Trader
-- Anon user
+- Anonymous
 
 ## USE CASE:
 
@@ -91,14 +91,14 @@ With using command `docker-compose up` you create 3 containers:
 * redis:latest (redis-for-dealer-stat)
 * web application (dealer-stat)
 
-Application use
+Application use:
 
 - Redis on: _redisdb:6379_
 - Mysql on: _mysqldb:3306_
 
 Now, it is still impossible to use the email service in docker container for registration due to
 javax.net.ssl.SSLHandshakeException Could not converting socket to TLS  
-_Will be fixed in future_
+_Will be fixed in the future._
 
 ## DATABASE:
 
@@ -146,8 +146,6 @@ Integration testing of the service End points
 Unit testing of the service logic layer  
 For testing used another database
 
-## POSTMAN:
-You can import postman collection to make debugging and developing faster 
 
 ## END POINTS:
 
@@ -310,3 +308,13 @@ Decline comments with ids:
 POST request _(/comment/decline)_  
 body:  `[ 1 , 3, 5 ]`  
 Authorized **true**(ADMIN)  
+
+## POSTMAN:
+You can import postman collection to make debugging and developing faster 
+Dealer stat collection support variables
+1) First, specify _base_url_ collection variable, URI, where application is running
+2) To make query, which use authentication, get JWT token from login request and specify _admin_token_ and _trader_token_ in collection variables
+
+You can download collection from [link]()
+
+Good luck!!!
