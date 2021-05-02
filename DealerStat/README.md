@@ -146,7 +146,7 @@ User should add JWT token to request header:
 Authorization: "Bearer JWT"
 | ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/jwt_example.png)| 
 | :--: | 
-| *Token example |
+| *Token example* |
 
 
 ## TESTING:
@@ -156,7 +156,7 @@ Unit testing of the service logic layer
 For testing used another database
 | ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/tests_passed.png)| 
 | :--: | 
-| *Test passed |
+| *Test passed* |
 
 
 ## END POINTS:
@@ -191,7 +191,9 @@ POST request
         "password": "admin",
         "role": "ADMIN"
     }
-| ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/confirm_message.png)| | :--: | | *Confirm message example |
+| ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/confirm_message.png)| 
+| :--: | 
+| *Confirm message example* |
 
 Login _(/auth/login)_:
 GET request
@@ -207,7 +209,9 @@ GET request: /auth/confirm/{secret_code}
 Forgot password:    
 POST request: /auth/forgot_password  
 body: email
-| ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/reset_message.png)| | :--: | | *Forgot password message example |
+| ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/reset_message.png)| 
+| :--: | 
+| *Forgot password message example* |
 
 Reset password  
 POST request: /auth/reset_password  
@@ -328,7 +332,7 @@ You can import postman collection to make debugging and developing faster
 
 | ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/postman.png)| 
 | :--: | 
-| *Postman example |
+| *Postman example* |
 
 Dealer stat collection support variables
 1) First, specify _base_url_ collection variable, URI, where application is running
