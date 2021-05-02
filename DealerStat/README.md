@@ -109,7 +109,9 @@ Database is represented in **Third Normal Form** (3NF)
 
 Database scheme:
 
-| ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/dealer_stat_db_scheme.png) | | :--: | | *Scheme* |
+| ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/dealer_stat_db_scheme.png) | 
+| :--: | 
+| *Scheme* |
 
 Scheame creation script:
 [](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/scripts/dealer-stat-schemas-init.sql)
@@ -142,7 +144,9 @@ Token Expire after 1 hour.
 The user password is stored in the database in a hashed form using the **Bcrypt algorithm**
 User should add JWT token to request header:  
 Authorization: "Bearer JWT"
-| ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/jwt_example.png)| | :--: | | *Token example |
+| ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/jwt_example.png)| 
+| :--: | 
+| *Token example |
 
 
 ## TESTING:
@@ -150,7 +154,9 @@ Authorization: "Bearer JWT"
 Integration testing of the service End points  
 Unit testing of the service logic layer  
 For testing used another database
-| ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/tests_passed.png)| | :--: | | *Test passed |
+| ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/tests_passed.png)| 
+| :--: | 
+| *Test passed |
 
 
 ## END POINTS:
@@ -319,7 +325,11 @@ Authorized **true**(ADMIN)
 
 ## POSTMAN:
 You can import postman collection to make debugging and developing faster 
-| ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/postman.png)| | :--: | | *Postman example |
+
+| ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/postman.png)| 
+| :--: | 
+| *Postman example |
+
 Dealer stat collection support variables
 1) First, specify _base_url_ collection variable, URI, where application is running
 2) To make query, which use authentication, get JWT token from login request and specify _admin_token_ and _trader_token_ in collection variables
