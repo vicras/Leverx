@@ -15,7 +15,7 @@ Several roles are used to work with the service:
 
 ## USE CASE:
 
-General user use case:
+General use case:
 
 1) A trader registers on the site, adds the desired items. The administrator reviews the content and accepts or rejects
    the posting request.
