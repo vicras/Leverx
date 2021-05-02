@@ -108,7 +108,7 @@ During development, I used **MySQL service 5.7.33 for linux**
 Database is represented in **Third Normal Form** (3NF)
 
 Database scheme:
-| ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/dealer_stat_db_scheme.png)| | :--: | | *Scheme* |
+| ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/dealer_stat_db_scheme.png) | | :--: | | *Scheme* |
 
 Scheame creation script:
 [](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/scripts/dealer-stat-schemas-init.sql)
