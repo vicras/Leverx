@@ -1,0 +1,761 @@
+{
+	"info": {
+		"_postman_id": "3e6cdf17-6a22-4952-956c-18d3cab1d16d",
+		"name": "Dealer Stat",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authorization Controller",
+			"item": [
+				{
+					"name": "Login",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"victor.graskov@gmail.com\",\n    \"password\":\"admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign Up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"victor.graskov@gmail.com\",\n    \"firstName\" : \"Viktor\",\n    \"lastName\": \"Graskov\",\n    \"password\": \"admin\",\n    \"role\": \"ADMIN\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/sign_up",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"sign_up"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm code",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/confirm/97646b1b-4607-47fd-81b1-5db5a0db4b04-1940169306",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"confirm",
+								"97646b1b-4607-47fd-81b1-5db5a0db4b04-1940169306"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "victor.graskov@gmail.com",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/forgot_password",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"forgot_password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "code",
+									"value": "secret_code",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "new_password",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/reset_password",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"reset_password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check code",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/check_code/?code=169e2afc-a683-465e-9569-c1a195642aa51860296711",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"check_code",
+								""
+							],
+							"query": [
+								{
+									"key": "code",
+									"value": "169e2afc-a683-465e-9569-c1a195642aa51860296711"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Game Controller",
+			"item": [
+				{
+					"name": "Add new Game",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"title\": \"STALKER\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/game",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all games",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/game",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"game"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Game object Controller",
+			"item": [
+				{
+					"name": "Admins requests",
+					"item": [
+						{
+							"name": "Get objects for approve",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/object/for_approve",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"object",
+										"for_approve"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Approve objects",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[ 1, 2 ]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/object/approve",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"object",
+										"approve"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Decline objects",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[ 6 ]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/object/decline",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"object",
+										"decline"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{admin_token}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Trader requests",
+					"item": [
+						{
+							"name": "Get all my game objects",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/object/my",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"object",
+										"my"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add game object",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"New game, realy new\",\n    \"description\": \"new and beautiful again\",\n    \"gameKeys\": [ 4, 7]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/object",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"object"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update existing game object",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"32\",\n    \"title\": \"New game, realy new\",\n    \"description\": \"new and beautiful again\",\n    \"gameKeys\": [ 1 ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/object",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"object"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete objects",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/object/2",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"object",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{trader_token}}",
+								"type": "string"
+							}
+						]
+					}
+				},
+				{
+					"name": "Get all game objects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/object",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"object"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comment Controller",
+			"item": [
+				{
+					"name": "Admin requests",
+					"item": [
+						{
+							"name": "Get comments for approve",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/comment/for_approve",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"comment",
+										"for_approve"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Approve comment",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[ 26]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/comment/approve",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"comment",
+										"approve"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Decline comment",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[ 26]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/comment/decline",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"comment",
+										"decline"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{admin_token}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Get comments variations",
+					"item": [
+						{
+							"name": "Get all comments about user",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/comment/user/2",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"comment",
+										"user",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all best comments about user",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/comment/user/2/best?amount=1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"comment",
+										"user",
+										"2",
+										"best"
+									],
+									"query": [
+										{
+											"key": "amount",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all worst comments about user",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/comment/user/2/worst",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"comment",
+										"user",
+										"2",
+										"worst"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get comment with ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/comment/3",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"comment",
+										"3"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Add comments",
+					"item": [
+						{
+							"name": "Add comment for user with id",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"mark\": \"4\",\n    \"message\": \"new comment2\",\n    \"destinationUserId\": \"12\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/comment/user/3",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"comment",
+										"user",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Comment for new user",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"user\": {\n        \"email\": \"victor.graskov5@gmail.com\",\n        \"firstName\": \"Viktor3\",\n        \"lastName\": \"Graskov3\",\n        \"password\": \"admin1\",\n        \"role\": \"TRADER\"\n    },\n    \"objectDTOS\": [\n        {\n            \"title\": \"New game object22\",\n            \"description\": \"new and beautiful22\",\n            \"gameKeys\": [ 4, 7 ]\n        }\n    ],\n    \"commentDTO\": {\n        \"mark\": \"4\",\n        \"message\": \"new comment2\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/comment/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"comment",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080/DealerStat_war"
+		},
+		{
+			"key": "trader_token",
+			"value": ""
+		},
+		{
+			"key": "admin_token",
+			"value": ""
+		}
+	]
+}
