@@ -4,7 +4,6 @@ import com.vicras.dto.EmailPasswordDTO;
 import com.vicras.dto.UserDTO;
 import com.vicras.exception.CannotSendMessageException;
 import com.vicras.service.AuthenticationService;
-import com.vicras.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +13,9 @@ import org.springframework.web.bind.annotation.*;
 public class AuthenticationController {
 
     private final AuthenticationService authService;
-    private final UserService userService;
 
-    public AuthenticationController(AuthenticationService authService,
-                                    UserService userService) {
+    public AuthenticationController(AuthenticationService authService){
         this.authService = authService;
-        this.userService = userService;
     }
 
 
