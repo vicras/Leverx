@@ -114,9 +114,9 @@ Database scheme:
 | *Scheme* |
 
 Scheame creation script:
-[](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/scripts/dealer-stat-schemas-init.sql)
+[link](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/scripts/dealer-stat-schemas-init.sql)  
 Database initialization script:
-[](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/scripts/dealer-stat-db-init.sql)
+[link](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/scripts/dealer-stat-db-init.sql)  
 
 #### Redis
 
