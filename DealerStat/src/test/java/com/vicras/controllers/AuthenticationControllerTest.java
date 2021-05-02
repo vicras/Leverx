@@ -170,8 +170,8 @@ public class AuthenticationControllerTest {
         userCodeRepository.save(code, user.getId());
 
         mockMvc.perform(post("/auth/reset_password", code)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{ \"code\":\""+code+"\", \"password\": \"new pass\"}"))
+                .param("code", code)
+                .param("password", "new pass"))
                 .andDo(print())
                 .andExpect(status().isOk());
         Assertions.assertTrue(

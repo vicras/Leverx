@@ -207,7 +207,7 @@ public class GameObjectControllerTest {
         this.mockMvc.perform(get("/object/for_approve"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(3)));
+                .andExpect(jsonPath("$", hasSize(2)));
     }
 
     @Test

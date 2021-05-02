@@ -81,7 +81,7 @@ class GameObjectServiceImplTest {
                 .when(gameObjectRepository)
                 .findById(gameObjectDto.getId());
 
-        gameObjectService.updateGameObjectForUserOwner(gameObjectDto,owner);
+        gameObjectService.updateOrAddGameObjectForUserOwner(gameObjectDto,owner);
         Mockito.verify(gameObjectRepository, Mockito.times(1))
                 .save(ArgumentMatchers.any());
     }

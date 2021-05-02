@@ -115,10 +115,10 @@ public class CommentControllerTest {
 
     @Test
     public void getExistingCommentWithId() throws Exception {
-        mockMvc.perform(get("/comment/{id}", 2))
+        mockMvc.perform(get("/comment/{id}", 3))
                 .andDo(print())
-                .andExpect(jsonPath("$.id", Matchers.is(2)))
-                .andExpect(jsonPath("$.message", Matchers.is("message 2 SENT with mark 3 for user 2")));
+                .andExpect(jsonPath("$.id", Matchers.is(3)))
+                .andExpect(jsonPath("$.message", Matchers.is("message 3 APPROVED with mark 3 for user 2")));
     }
 
     @Test
