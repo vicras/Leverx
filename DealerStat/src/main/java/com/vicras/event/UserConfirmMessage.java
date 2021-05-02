@@ -41,7 +41,11 @@ public class UserConfirmMessage {
     }
 
     private String resolveBaseUrl() {
-        return ServletUriComponentsBuilder.fromCurrentContextPath().toUriString();
+        try {
+            return ServletUriComponentsBuilder.fromCurrentContextPath().toUriString();
+        } catch (IllegalStateException e) {
+            return "";
+        }
     }
 
     public static UserConfirmMessage getNewUserMessage(User user, String confirmLink, String code) {

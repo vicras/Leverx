@@ -55,7 +55,7 @@ public class GameObjectServiceImpl implements GameObjectService {
     }
 
     @Override
-    public void updateGameObjectForUserOwner(GameObjectDTO gameObjectDTO, User userOwner) throws UserNotOwnerException {
+    public void updateOrAddGameObjectForUserOwner(GameObjectDTO gameObjectDTO, User userOwner) throws UserNotOwnerException {
         Objects.requireNonNull(gameObjectDTO.getId(), () -> "Game object id must be not null");
 
         objectRepository.findById(gameObjectDTO.getId())
@@ -85,9 +85,10 @@ public class GameObjectServiceImpl implements GameObjectService {
 
     @Override
     public List<GameObject> getObjectsForApprove() {
-        var statuses = List.of(ApprovedStatus.VIEWED,
+        var approvedSt = List.of(ApprovedStatus.VIEWED,
                 ApprovedStatus.SENT);
-        return objectRepository.findAllByApprovedStatusIn(statuses).stream()
+        var entitySt = List.of(EntityStatus.ACTIVE);
+        return objectRepository.findAllByApprovedStatusInAndEntityStatusIn(approvedSt, entitySt).stream()
                 .peek(e -> updateAndSaveObjectApprovedStatus(e, ApprovedStatus.VIEWED))
                 .collect(Collectors.toList());
     }

@@ -19,6 +19,8 @@ public interface GameObjectRepository extends JpaRepository<GameObject, Long> {
 
     List<GameObject> findAllByApprovedStatusIn(List<ApprovedStatus> approvedStatus);
 
+    List<GameObject> findAllByApprovedStatusInAndEntityStatusIn(Collection<ApprovedStatus> approvedStatus, Collection<EntityStatus> entityStatus);
+
     List<GameObject> findAllByEntityStatusIsAndApprovedStatusIs(EntityStatus entityStatus, ApprovedStatus approvedStatus);
 
     Optional<GameObject> findByTitle(String title);
@@ -29,5 +31,5 @@ public interface GameObjectRepository extends JpaRepository<GameObject, Long> {
 
     @Modifying
     @Query("update GameObject g set g.approvedStatus =?2 where g.id in ?1 and g.approvedStatus in ?3")
-    void updateObjectStatusWithIdIn(Collection<Long> gameObjectsIds, ApprovedStatus status, Collection<ApprovedStatus> oldStatus);
+    void updateObjectStatusWithIdIn(Collection<Long> gameObjectsIds, ApprovedStatus newStatus, Collection<ApprovedStatus> oldStatus);
 }

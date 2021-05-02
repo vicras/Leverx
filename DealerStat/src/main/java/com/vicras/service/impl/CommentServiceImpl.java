@@ -90,7 +90,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Optional<Comment> getCommentWithId(Long commentId) {
-        return commentRepository.findById(commentId);
+        return commentRepository.findByIdAndApprovedStatus(commentId, ApprovedStatus.APPROVED);
     }
 
     @Override

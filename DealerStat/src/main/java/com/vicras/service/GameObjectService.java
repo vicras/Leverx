@@ -16,7 +16,7 @@ public interface GameObjectService {
 
     void deleteGameObjectForUserOwner(long id, User userOwner) throws UserNotOwnerException;
 
-    void updateGameObjectForUserOwner(GameObjectDTO gameObjectDTO, User userOwner) throws UserNotOwnerException;
+    void updateOrAddGameObjectForUserOwner(GameObjectDTO gameObjectDTO, User userOwner) throws UserNotOwnerException;
 
     List<GameObject> getObjectsForApprove();
 

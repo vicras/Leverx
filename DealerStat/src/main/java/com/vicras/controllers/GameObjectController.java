@@ -48,7 +48,7 @@ public class GameObjectController {
     @PutMapping()
     private ResponseEntity<String> updateMyGameObject(@RequestBody() GameObjectDTO updatedGameObject, Principal principal) {
         User currentUser = getUserByPrincipal(principal);
-        gameObjectService.updateGameObjectForUserOwner(updatedGameObject, currentUser);
+        gameObjectService.updateOrAddGameObjectForUserOwner(updatedGameObject, currentUser);
         return new ResponseEntity<>("Object updated successfully!", HttpStatus.OK);
     }
 
