@@ -1,5 +1,5 @@
 # Dealer Stat
-
+ 
 The goal of the project is to create a platform that provides independent ratings of in-game items _traders_. The
 ratings are calculated according to the reviews provided by all the traders' customers.  
 At the same time, traders list their in-game items for sale so anyone can get acquainted with them. Each review and in-game item is checked by the
