@@ -107,14 +107,14 @@ Database is represented in **Third Normal Form** (3NF)
 
 Database scheme:
 
-| ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/dealer_stat_db_scheme.png) | 
+| ![](https://github.com/vicras/Leverx/blob/master/DealerStat/docs/image/dealer_stat_db_scheme.png) | 
 | :--: | 
 | *Scheme* |
 
 Scheme creation script:
-[link](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/scripts/dealer-stat-schemas-init.sql)  
+[link](https://github.com/vicras/Leverx/blob/master/DealerStat/docs/scripts/dealer-stat-schemas-init.sql)  
 Database initialization script:
-[link](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/scripts/dealer-stat-db-init.sql)  
+[link](https://github.com/vicras/Leverx/blob/master/DealerStat/docs/scripts/dealer-stat-db-init.sql)  
 
 #### Redis
 
@@ -143,7 +143,7 @@ The user password is hashed with the **Bcrypt algorithm** for storing in the dat
 User should add JWT token to request header:  
 Authorization: "Bearer JWT"
 
-| ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/jwt_example.png)| 
+| ![](https://github.com/vicras/Leverx/blob/master/DealerStat/docs/image/jwt_example.png)| 
 | :--: | 
 | *Token example* |
 
@@ -154,7 +154,7 @@ Integration testing was carried out for the service End points
 Unit testing was carried out for the service layer logic   
 For testing purposes different database was used
 
-| ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/tests_passed.png)| 
+| ![](https://github.com/vicras/Leverx/blob/master/DealerStat/docs/image/tests_passed.png)| 
 | :--: | 
 | *Test passed* |
 
@@ -191,7 +191,7 @@ POST request
         "password": "admin",
         "role": "ADMIN"
     }
-| ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/confirm_message.png)| 
+| ![](https://github.com/vicras/Leverx/blob/master/DealerStat/docs/image/confirm_message.png)| 
 | :--: | 
 | *Confirm message example* |
 
@@ -209,7 +209,7 @@ GET request: /auth/confirm/{secret_code}
 Forgot password:    
 POST request: /auth/forgot_password  
 body: email
-| ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/reset_message.png)| 
+| ![](https://github.com/vicras/Leverx/blob/master/DealerStat/docs/image/reset_message.png)| 
 | :--: | 
 | *Forgot password message example* |
 
@@ -330,7 +330,7 @@ Authorized **true**(ADMIN)
 ## POSTMAN:
 Postman collection can be imported to speed up debugging and development processes
 
-| ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/postman.png)| 
+| ![](https://github.com/vicras/Leverx/blob/master/DealerStat/docs/image/postman.png)| 
 | :--: | 
 | *Postman example* |
 
@@ -338,6 +338,6 @@ Dealer stats collection supports following variables
 1) First, specify _base_url_ collection variable, URI, where application is running
 2) To crate a query with authentication, get JWT token from login request and specify _admin_token_ and _trader_token_ in collection variables
 
-The collection can be downloaded from [here](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/Dealer%20Stat.postman_collection.json)
+The collection can be downloaded from [here](https://github.com/vicras/Leverx/blob/master/DealerStat/docs/Dealer%20Stat.postman_collection.json)
 
 Good luck!!!
