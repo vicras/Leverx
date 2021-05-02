@@ -1,13 +1,13 @@
 # Dealer Stat
 
-The goal of the project is to create a service that provides an independent rating to _trader_ of in-game items. The
-rating of the traders is based on the reviews that any user of the network can offer. At the same time, the seller
-places a game item on the service, which anyone can get acquainted with. Each review and game item is checked by the
-service administrator before publication.
+The goal of the project is to create a platform that provides independent ratings of in-game items _traders_. The
+ratings are calculated according to the reviews provided by all the traders' customers.  
+At the same time, traders list their in-game items for sale so anyone can get acquainted with them. Each review and in-game item is checked by the
+platform administrator before publication.
 
 ## ROLES:
 
-Several roles are used to work with the service:
+Several roles are used:
 
 - Admin
 - Trader
@@ -15,38 +15,35 @@ Several roles are used to work with the service:
 
 ## USE CASE:
 
-General user use case:
+General use cases:
 
-1) A trader registers on the site, adds the desired items. The administrator reviews the content and accepts or rejects
-   the posting request.
+1) A Trader registers on the site and lists the items for sale. The Administrator decides whether the request is valid or not.
 
-2) An anonymous user comes to the site, looks at the offers of a certain trader, leaves his feedback about the trader.
-   The administrator reviews the review and accepts or rejects the request to post it.
+2) An Anonymous comes to the site, looks at the offers of a certain Trader and leaves his/her feedback about the Trader.
+   The Administrator decides whether the feedback may be posted or not.
 
-3) An anonymous user comes to the site, does not find the desired trader and registers his account, if necessary, with
-   in-game items and reviews for him. The administrator verifies the information and accepts or rejects the request to
-   publish it.
+3) In case Anonymous does not find the desired Trader, he/she can register trader's account and list the items for sale/leave feedback, if necessary. The administrator verifies the information and accepts or rejects the publication request.
 
 ## REGISTRATION:
 
-To register on the service, you must use a **valid** email address.  
-After registration, a letter will be sent to the mailing address for the registration account.  
-Also, the email address will be used if the user forgets the password and decides to change it.  
-The link in such letters is valid for **24 hours**.
+To register on the platform, you must use a **valid** email address.  
+After registration, a confirmation letter will be sent to it.  
+Besides, the email address will be used in case of password recovery.  
+The link in confirmation letters is valid for **24 hours**.
 
 ## MAIN TECHNOLOGIES:
 
-* Application is built in **REST style** using Spring Framework
-* Used the **Spring MVC** development pattern
-* Authorization and authentication was carried out using **Spring security**, using **JWT** technology.
-* **MySQL** Database is used to store user data, interaction with which occurs through the **ORM** model using **Hibernate**.
-* Standard **EE Mail service** is used to send emails
-* Emails are Mime message, the **Thymeleaf** template engine is used to generate them when the application is running
-* **Redis** is used for fast data retrieval
-* Used **Java 11**
-* **Lombok** project was used to reduce Boilerplate code
-* **Log4j** is used for logging
-* For integration testing and unit testing, the following is used:
+* **REST style** with Spring Framework
+* **Spring MVC** development pattern
+*  **Spring security** and **JWT** for authorization and authentication.
+* **MySQL** Database for used data storage. The interaction with database is implemented through the **ORM** model using **Hibernate**.
+* Standard **EE Mail service** for mailing
+* **Thymeleaf** for confirmation emails(Mime messages) generation
+* **Redis** for fast data retrieval
+* **Java 11**
+* **Lombok** for Boilerplate code reducing
+* **Log4j** for logging
+* Integration testing and unit testing:
     - hamcrest
     - mokito
     - junit-jupiter
@@ -55,21 +52,21 @@ The link in such letters is valid for **24 hours**.
 
 ## BUILD:
 
-The compilation of the application generates several artifacts:
+Several artifacts are generated during the application compilation:
 
 * webapp-runner.jar
 * DealerStat-0.0.1-SNAPSHOT.war
 
 #### WAR
 
-Can be used to run on your server own server. For example on tomcat:9.0.45 application works perfectly.
+The application can be used to run on your own server. For example it works perfectly on tomcat:9.0.45.
 
 #### JAR
 
-With using this artifact you can run war application without installing special server.  
+War application can be run without a special server installation.  
 Use **command**: `java -jar webapp-runner.jar DealerStat-0.0.1-SNAPSHOT.war`
 
-To run on local machine device must have:
+Requirements for running on local machine device:
 
 * Redis:  _localhost:6379_
 * MySql:  _localhost:3306_
@@ -77,26 +74,27 @@ To run on local machine device must have:
 ## DOCKER:
 
 WARNING!!!  
-Before use docker compile application artifacts. You can use command: `mvn clean package -Dmaven.test.skip=true`
+Before docker usage application artifacts must be compiled. Following command may be used:   
+`mvn clean package -Dmaven.test.skip=true`
 
 ### Dockerfile
 
-Create image tomcat:9.0.45 and DealerStat-0.0.1-SNAPSHOT.war deployed on it. Use command `docker build .`
+Create image tomcat:9.0.45 with DealerStat-0.0.1-SNAPSHOT.war deployed on it with  `docker build .`
 
 ### docker-compose.yml
 
-With using command `docker-compose up` you create 3 containers:
+`docker-compose up` creates 3 containers:
 
 * mysql:5.7.34 (mysql-for-dealer-stat)
 * redis:latest (redis-for-dealer-stat)
 * web application (dealer-stat)
 
-Application use:
+The application uses:
 
 - Redis on: _redisdb:6379_
 - Mysql on: _mysqldb:3306_
 
-Now, it is still impossible to use the email service in docker container for registration due to
+It is still impossible to use the email service for registration in docker container due to
 javax.net.ssl.SSLHandshakeException Could not converting socket to TLS  
 _Will be fixed in the future._
 
@@ -104,7 +102,7 @@ _Will be fixed in the future._
 
 #### MySQL
 
-During development, I used **MySQL service 5.7.33 for linux**  
+**MySQL service 5.7.33 for Linux** is used in development process  
 Database is represented in **Third Normal Form** (3NF)
 
 Database scheme:
@@ -113,7 +111,7 @@ Database scheme:
 | :--: | 
 | *Scheme* |
 
-Scheame creation script:
+Scheme creation script:
 [link](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/scripts/dealer-stat-schemas-init.sql)  
 Database initialization script:
 [link](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/scripts/dealer-stat-db-init.sql)  
@@ -121,42 +119,44 @@ Database initialization script:
 #### Redis
 
 **Redis 4.0.9** is used to store activation codes  
-Storage occurs in key-value format:
+Data is stored in key-value format:
 
 * **Key**: unique UUID value
 * **Value**: user id
 
-Each code has automatically expired after 24 hours
+Each code automatically expires in 24 hours
 
 ## AUTHENTICATION AND AUTHORIZATION:
 
-**Authentication** is done with spring-security  
-Sessions was removed and default authentication was changed for _Jackson Web Token_ (JWT)
-For signature was used default **HS256** algorithm  
-PAYLOAD contains information _(CLAIMS):_
+**Authentication** is implemented with **Spring security**  
+Sessions are removed and default authentication is changed for _Jackson Web Token_ (JWT)
+Default **HS256** algorithm is used for signature    
+PAYLOAD contains following information _(CLAIMS):_
 
     * creation date
     * expiration date. 
     * user id
     * role
 
-Token Expire after 1 hour.  
-The user password is stored in the database in a hashed form using the **Bcrypt algorithm**
+Tokens expire in 1 hour.  
+The user password is hashed with the **Bcrypt algorithm** for storing in the database
 User should add JWT token to request header:  
 Authorization: "Bearer JWT"
+
 | ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/jwt_example.png)| 
 | :--: | 
-| *Token example |
+| *Token example* |
 
 
 ## TESTING:
 
-Integration testing of the service End points  
-Unit testing of the service logic layer  
-For testing used another database
+Integration testing was carried out for the service End points  
+Unit testing was carried out for the service layer logic   
+For testing purposes different database was used
+
 | ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/tests_passed.png)| 
 | :--: | 
-| *Test passed |
+| *Test passed* |
 
 
 ## END POINTS:
@@ -191,7 +191,9 @@ POST request
         "password": "admin",
         "role": "ADMIN"
     }
-| ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/confirm_message.png)| | :--: | | *Confirm message example |
+| ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/confirm_message.png)| 
+| :--: | 
+| *Confirm message example* |
 
 Login _(/auth/login)_:
 GET request
@@ -207,7 +209,9 @@ GET request: /auth/confirm/{secret_code}
 Forgot password:    
 POST request: /auth/forgot_password  
 body: email
-| ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/reset_message.png)| | :--: | | *Forgot password message example |
+| ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/reset_message.png)| 
+| :--: | 
+| *Forgot password message example* |
 
 Reset password  
 POST request: /auth/reset_password  
@@ -324,16 +328,16 @@ body:  `[ 1 , 3, 5 ]`
 Authorized **true**(ADMIN)  
 
 ## POSTMAN:
-You can import postman collection to make debugging and developing faster 
+Postman collection can be imported to speed up debugging and development processes
 
 | ![](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/image/postman.png)| 
 | :--: | 
-| *Postman example |
+| *Postman example* |
 
-Dealer stat collection support variables
+Dealer stats collection supports following variables
 1) First, specify _base_url_ collection variable, URI, where application is running
-2) To make query, which use authentication, get JWT token from login request and specify _admin_token_ and _trader_token_ in collection variables
+2) To crate a query with authentication, get JWT token from login request and specify _admin_token_ and _trader_token_ in collection variables
 
-You can download collection from [link](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/Dealer%20Stat.postman_collection.json)
+The collection can be downloaded from [here](https://github.com/vicras/Leverx/blob/realese/0.1.0/DealerStat/docs/Dealer%20Stat.postman_collection.json)
 
 Good luck!!!
