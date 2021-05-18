@@ -28,16 +28,6 @@ public class Task {
         tags = new HashSet<>();
     }
 
-    public TaskDTO convert2DTO(){
-        return TaskDTO.builder()
-                .id(id)
-                .tags(tags)
-                .title(title)
-                .type(type)
-                .createdOn(createdOn)
-                .build();
-    }
-
     public Task addTag(String tag){
         tags.add(tag);
         return this;

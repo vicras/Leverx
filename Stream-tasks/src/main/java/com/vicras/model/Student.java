@@ -9,15 +9,8 @@ import java.util.Map;
 @Data
 public class Student {
 
-    @Value
-    public static class Record {
-        String name;
-        String subject;
-        Integer marks;
-    }
-
-    Map<String, Integer> rating;
-    String name;
+    private Map<String, Integer> rating;
+    private String name;
 
     public Student(String name) {
         rating = new HashMap<>();
@@ -27,6 +20,10 @@ public class Student {
     public Student rate(String subject, Integer rate) {
         rating.put(subject, rate);
         return this;
+    }
+
+    public Integer getRatingBySubject(String subject){
+        return rating.get(subject);
     }
 
 
