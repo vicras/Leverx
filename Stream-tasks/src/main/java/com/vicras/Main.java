@@ -1,30 +1,42 @@
 package com.vicras;
 
+import com.vicras.model.Person;
+import com.vicras.model.Skill;
 import com.vicras.model.Student;
 import com.vicras.model.Task;
 import com.vicras.model.enums.TaskType;
-import com.vicras.service.StudentService;
-import com.vicras.service.TaskService;
+import com.vicras.service.SkillService;
+import com.vicras.service.WorldAnalyser;
+import com.vicras.service.impl.SkillServiceImpl;
+import com.vicras.service.impl.StudentServiceImpl;
+import com.vicras.service.impl.TaskServiceImpl;
+import com.vicras.service.impl.WorldAnalyserImpl;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.OptionalDouble;
 
 
 public class Main {
 
-    StudentService studentService;
-    TaskService taskService;
-    List<Student> students;
-    List<Task> tasks;
+    private final StudentServiceImpl studentService;
+    private final TaskServiceImpl taskService;
+    private final WorldAnalyser worldAnalyser;
+    private final SkillService skillService;
+    private final List<Student> students;
+    private final List<Person> persons;
+    private final List<Task> tasks;
 
     public Main() {
-        this.studentService = new StudentService();
-        this.taskService = new TaskService();
+        this.studentService = new StudentServiceImpl();
+        this.taskService = new TaskServiceImpl();
+        worldAnalyser = new WorldAnalyserImpl();
+        skillService = new SkillServiceImpl();
         students = initStudents();
         tasks = initTasks();
+        persons = initPersons();
     }
 
     public void outputReport() {
@@ -33,11 +45,9 @@ public class Main {
     }
 
     public void outputAverageByMath() {
-        String math = "math";
-        OptionalDouble it = studentService.getAverageScore(students, math);
-        it.ifPresent(e -> {
-            System.out.println("\n" + math + " average: " + e);
-        });
+        String subject = "math";
+        var average = studentService.getAverageScore(students, subject);
+        System.out.println("\n" + subject + " average: " + average);
     }
 
     public void outputTitlesForRead() {
@@ -50,6 +60,21 @@ public class Main {
         System.out.println("\nGroup by title");
         taskService.groupListByType(tasks)
                 .entrySet()
+                .forEach(System.out::println);
+    }
+
+    public void analyseWord() {
+        String word = "alfbjanjaba t a3";
+
+        String result1 = worldAnalyser.getCharUsage(word, 'a');
+        String result2 = worldAnalyser.getCharUsage(word, 'b');
+        System.out.println("\nAnalyze char usage = " + result1);
+        System.out.println("\nAnalyze char usage = " + result2);
+    }
+
+    public void showBestMatchingPerson(){
+        skillService.getBestMatchingPerson(persons, new Skill("English", 50), new Skill("Kannada", 50),
+                new Skill("Urdu", 50), new Skill("Hindi", 50))
                 .forEach(System.out::println);
     }
 
@@ -68,6 +93,30 @@ public class Main {
         return Arrays.asList(task1, task2, task3, task4, task5);
     }
 
+    private static List<Person> initPersons() {
+        List<Person> persons = new ArrayList<>();
+
+        persons.add(new Person(1L, "Lokesh", new Skill("English", 10),
+                new Skill("Kannada", 20), new Skill("Hindi", 10)));
+
+        persons.add(new Person(2L, "Mahesh", new Skill("English", 10),
+                new Skill("Kannada", 30), new Skill("Hindi", 50)));
+
+        persons.add(new Person(3L, "Ganesh", new Skill("English", 10),
+                new Skill("Kannada", 20), new Skill("Hindi", 40)));
+
+        persons.add(new Person(4L, "Ramesh", new Skill("English", 10),
+                new Skill("Kannada", 20), new Skill("Hindi", 40)));
+
+        persons.add(new Person(5L, "Suresh", new Skill("English", 10),
+                new Skill("Kannada", 40), new Skill("Hindi", 40)));
+
+        persons.add(new Person(6L, "Gnanesh", new Skill("English", 100),
+                new Skill("Kannada", 20), new Skill("Hindi", 40)));
+
+        return persons;
+    }
+
     public static void main(String[] args) {
         Main main = new Main();
 
@@ -76,6 +125,8 @@ public class Main {
         main.outputReport();
         main.outputTitlesForRead();
         main.outputGroupingByTitle();
+        main.analyseWord();
+        main.showBestMatchingPerson();
     }
 
 }
