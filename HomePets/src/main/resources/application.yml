@@ -2,11 +2,9 @@ server:
   port: ${SERVER_PORT:8080}
 
 spring:
-  datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/pets}
-    username: ${DATABASE_USERNAME:postgres}
-    password: ${DATABASE_PASSWORD:root}
-    driver-class-name: org.postgresql.Driver
+  profiles:
+    active: development
+
   jpa:
     show-sql: true
     hibernate:
@@ -19,9 +17,4 @@ spring:
   jackson:
     mapper.ACCEPT_CASE_INSENSITIVE_ENUMS: true
 
-logging:
-  level:
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-    org.apache.http: DEBUG
-    httpclient.wire: DEBUG
+

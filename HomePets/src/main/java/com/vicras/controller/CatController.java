@@ -4,7 +4,6 @@ import com.vicras.dto.CatDto;
 import com.vicras.service.CatService;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Range;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vicras.model.enums.CatBreed;
 import com.vicras.validator.annotations.RealName;
 import lombok.Data;
-import lombok.NonNull;
 import org.hibernate.validator.constraints.Range;
-
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
