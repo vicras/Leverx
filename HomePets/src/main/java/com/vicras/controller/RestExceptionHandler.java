@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Slf4j
 @ControllerAdvice()
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class RestExceptionHandler extends ResponseEntityExceptionHandler{
+public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {EntityNotFoundException.class})
     protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {

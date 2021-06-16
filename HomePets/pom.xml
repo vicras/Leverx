@@ -54,7 +54,7 @@
         <optional>true</optional>
     </dependency>
 
-    <!-- Mapstruct -->
+    <!-- Mapper -->
     <dependency>
         <groupId>org.mapstruct</groupId>
         <artifactId>mapstruct</artifactId>
