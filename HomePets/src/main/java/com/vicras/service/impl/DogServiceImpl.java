@@ -4,10 +4,9 @@ import com.vicras.dto.DogDto;
 import com.vicras.exception.EntityNotFoundException;
 import com.vicras.mapper.DogMapper;
 import com.vicras.model.Dog;
-import com.vicras.model.Person;
 import com.vicras.repository.DogRepository;
-import com.vicras.repository.PersonRepository;
 import com.vicras.service.DogService;
+import com.vicras.service.PersonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +22,7 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class DogServiceImpl implements DogService {
 
-    private final PersonRepository personRepository;
+    private final PersonService personService;
     private final DogRepository dogRepository;
     private final DogMapper dogMapper;
 
@@ -66,12 +65,8 @@ public class DogServiceImpl implements DogService {
     Dog updateExistingDog(Dog oldDog, DogDto newDog) {
         oldDog.setName(newDog.getName());
         oldDog.setBreed(newDog.getBreed());
-        oldDog.setOwner(getPersonById(newDog.getOwner()));
+        oldDog.setOwner(personService.getPersonById(newDog.getOwner()));
         return oldDog;
     }
 
-    Person getPersonById(Long id) {
-        return personRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(Person.class, id));
-    }
 }

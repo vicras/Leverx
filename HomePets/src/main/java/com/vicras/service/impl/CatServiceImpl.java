@@ -4,10 +4,9 @@ import com.vicras.dto.CatDto;
 import com.vicras.exception.EntityNotFoundException;
 import com.vicras.mapper.CatMapper;
 import com.vicras.model.Cat;
-import com.vicras.model.Person;
 import com.vicras.repository.CatRepository;
-import com.vicras.repository.PersonRepository;
 import com.vicras.service.CatService;
+import com.vicras.service.PersonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +22,7 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class CatServiceImpl implements CatService {
 
-    private final PersonRepository personRepository;
+    private final PersonService personService;
     private final CatRepository catRepository;
     private final CatMapper catMapper;
 
@@ -66,12 +65,8 @@ public class CatServiceImpl implements CatService {
     Cat updateExistingCat(Cat oldCat, CatDto newCat) {
         oldCat.setName(newCat.getName());
         oldCat.setBreed(newCat.getBreed());
-        oldCat.setOwner(getPersonById(newCat.getOwner()));
+        oldCat.setOwner(personService.getPersonById(newCat.getOwner()));
         return oldCat;
     }
 
-    Person getPersonById(Long id) {
-        return personRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(Person.class, id));
-    }
 }

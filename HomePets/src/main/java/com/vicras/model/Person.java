@@ -39,4 +39,5 @@ public class Person extends BaseEntity {
         this.birthday = birthday;
         this.animals = animals;
     }
+
 }

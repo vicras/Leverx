@@ -28,4 +28,5 @@ public class DayBeforeValidator implements ConstraintValidator<DayBeforeNow, Loc
     public boolean isValid(LocalDate date, ConstraintValidatorContext constraintValidatorContext) {
         return date != null && date.isBefore(maximalAllowedDate);
     }
+
 }

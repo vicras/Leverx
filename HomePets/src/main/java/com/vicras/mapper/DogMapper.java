@@ -31,4 +31,5 @@ public abstract class DogMapper {
         return personRepository.findById(owner)
                 .orElseThrow(() -> new EntityNotFoundException(Person.class, owner));
     }
+
 }

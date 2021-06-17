@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
  */
 @Data
 public class PersonDto {
+
     @JsonProperty("id")
     private Long id;
 
@@ -31,4 +32,5 @@ public class PersonDto {
     @JsonProperty("birthday")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
+
 }

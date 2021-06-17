@@ -42,4 +42,5 @@ public abstract class BaseEntity {
     private void setChangeDate() {
         this.updatedAt = LocalDateTime.now();
     }
+
 }

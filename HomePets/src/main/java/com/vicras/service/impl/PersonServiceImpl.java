@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -53,11 +52,9 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public List<PersonDto> getPersonById(Long id) {
+    public Person getPersonById(Long id) {
         return personRepository.findById(id)
-                .map(personMapper::fromPerson)
-                .map(List::of)
-                .orElse(emptyList());
+                .orElseThrow(() -> new EntityNotFoundException(Person.class, id));
     }
 
     Person updateExistingPerson(Person oldPerson, PersonDto newPerson) {
@@ -65,4 +62,5 @@ public class PersonServiceImpl implements PersonService {
         oldPerson.setBirthday(newPerson.getBirthday());
         return oldPerson;
     }
+
 }

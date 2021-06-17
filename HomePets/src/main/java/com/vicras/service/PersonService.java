@@ -2,6 +2,7 @@ package com.vicras.service;
 
 
 import com.vicras.dto.PersonDto;
+import com.vicras.model.Person;
 
 import java.util.List;
 
@@ -17,5 +18,6 @@ public interface PersonService {
 
     List<PersonDto> getAllPersons();
 
-    List<PersonDto> getPersonById(Long id);
+    Person getPersonById(Long id);
+
 }

@@ -3,7 +3,7 @@ server:
 
 spring:
   profiles:
-    active: Dev
+    active: ${SPRING_ACTIVE_PROFILE:Dev}
 
   jpa:
     show-sql: true
@@ -16,5 +16,3 @@ spring:
 
   jackson:
     mapper.ACCEPT_CASE_INSENSITIVE_ENUMS: true
-
-

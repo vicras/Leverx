@@ -1,6 +1,8 @@
 package com.vicras.controller;
 
 import com.vicras.dto.PersonDto;
+import com.vicras.mapper.PersonMapper;
+import com.vicras.model.Person;
 import com.vicras.service.PersonService;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Range;
@@ -25,6 +27,7 @@ import java.util.List;
 public class PersonController {
 
     private final PersonService personService;
+    private final PersonMapper personMapper;
 
     @GetMapping
     List<PersonDto> getAllPerson() {
@@ -32,8 +35,9 @@ public class PersonController {
     }
 
     @GetMapping("/{id}")
-    List<PersonDto> findPersonById(@PathVariable @Range Long id) {
-        return personService.getPersonById(id);
+    PersonDto findPersonById(@PathVariable @Range Long id) {
+        Person person = personService.getPersonById(id);
+        return personMapper.fromPerson(person);
     }
 
     @PostMapping

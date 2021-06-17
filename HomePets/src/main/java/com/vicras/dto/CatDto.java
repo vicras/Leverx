@@ -36,4 +36,5 @@ public class CatDto {
 
     @JsonProperty("bread")
     private CatBreed breed;
+
 }

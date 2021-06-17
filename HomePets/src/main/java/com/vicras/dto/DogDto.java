@@ -6,6 +6,7 @@ import com.vicras.validator.annotations.RealName;
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 /**
@@ -29,9 +30,11 @@ public class DogDto {
     private String name;
 
     @Range
+    @NotNull
     @JsonProperty("owner_id")
     private Long owner;
 
     @JsonProperty("bread")
     private DogBreed breed;
+
 }
