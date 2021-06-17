@@ -23,3 +23,6 @@
 ### Database layer
 ![](docs/img/database_scheme.png)
 
+## Postman
+
+You can test API with using postman [collection](docs/postman)
