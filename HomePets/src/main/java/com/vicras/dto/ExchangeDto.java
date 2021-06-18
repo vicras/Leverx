@@ -21,7 +21,7 @@ public class ExchangeDto {
 
     @UniqueElements
     @JsonProperty("animals_from")
-    private List<Long> animalsFrom;
+    private List<@NotNull Long> animalsFrom;
 
     @Range
     @NotNull
@@ -30,6 +30,6 @@ public class ExchangeDto {
 
     @UniqueElements
     @JsonProperty("animals_to")
-    private List<Long> animalsTo;
+    private List<@NotNull Long> animalsTo;
 
 }

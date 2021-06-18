@@ -20,6 +20,8 @@ public abstract class DogMapper {
     private PersonRepository personRepository;
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     @Mapping(source = "owner", target = "owner", qualifiedByName = "findOwner")
     public abstract Dog toDog(DogDto dogDto);
 

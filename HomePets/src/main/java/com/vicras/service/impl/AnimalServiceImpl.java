@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.util.function.Predicate.not;
 import static java.util.stream.Collectors.toList;
 
 @Service
@@ -23,10 +24,10 @@ public class AnimalServiceImpl implements AnimalService {
     private final AnimalRepository animalRepository;
 
     @Override
-    public void exchangeAnimals(ExchangeDto exchangeDto) {
+    public void exchangeAnimals(ExchangeDto exchangeDto) throws EntityNotFoundException, AnimalsNotBelongException {
 
-        Person ownerFrom = personService.getPersonById(exchangeDto.getOwnerFrom());
-        Person ownerTo = personService.getPersonById(exchangeDto.getOwnerTo());
+        Person ownerFrom = getPersonById(exchangeDto.getOwnerFrom());
+        Person ownerTo = getPersonById(exchangeDto.getOwnerTo());
 
         List<Animal> animalsTo = getAnimalsByIds(exchangeDto.getAnimalsTo());
         List<Animal> animalsFrom = getAnimalsByIds(exchangeDto.getAnimalsFrom());
@@ -41,23 +42,28 @@ public class AnimalServiceImpl implements AnimalService {
         setOwnerForAnimals(animalsTo, ownerFrom);
     }
 
+    private Person getPersonById(Long ownerFrom) {
+        return personService.getPersonById(ownerFrom);
+    }
+
     private List<Animal> getAnimalsByIds(List<Long> animalsTo) {
         return animalRepository.findAllById(animalsTo);
     }
 
-    private void checkAnimalExisting(List<Animal> animals, List<Long> animalsIds) {
+    private void checkAnimalExisting(List<Animal> animals, List<Long> animalsIds) throws EntityNotFoundException {
         var findAnimalIds = animals.stream().map(Animal::getId).collect(toList());
+
         animalsIds.stream()
-                .filter(id -> !findAnimalIds.contains(id))
+                .filter(not(findAnimalIds::contains))
                 .findFirst()
                 .ifPresent((id) -> {
                     throw new EntityNotFoundException(Animal.class, id);
                 });
     }
 
-    private void checkAnimalAffiliation(Long ownerId, List<Animal> animalsFrom) {
+    private void checkAnimalAffiliation(Long ownerId, List<Animal> animalsFrom) throws AnimalsNotBelongException {
         animalsFrom.stream()
-                .filter(animal -> !isAnimalBelongPersonWithId(ownerId, animal))
+                .filter(not(animal -> isAnimalBelongPersonWithId(ownerId, animal)))
                 .findFirst()
                 .ifPresent(animal -> {
                     throw new AnimalsNotBelongException(animal, ownerId);

@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+/**
+ * @author viktar hraskou
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/animals")
@@ -30,4 +33,5 @@ public class AnimalsController {
     void exchangeAnimals(@Valid @RequestBody ExchangeDto exchangeDto) {
         animalService.exchangeAnimals(exchangeDto);
     }
+
 }
