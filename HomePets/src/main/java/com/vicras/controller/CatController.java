@@ -32,7 +32,7 @@ public class CatController {
     }
 
     @GetMapping("/{id}")
-    List<CatDto> findCatById(@PathVariable Long id) {
+    CatDto findCatById(@PathVariable Long id) {
         return catService.getById(id);
     }
 

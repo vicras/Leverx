@@ -32,7 +32,7 @@ public class DogController {
     }
 
     @GetMapping("/{id}")
-    List<DogDto> findDogById(@PathVariable Long id) {
+    DogDto findDogById(@PathVariable Long id) {
         return dogService.getById(id);
     }
 

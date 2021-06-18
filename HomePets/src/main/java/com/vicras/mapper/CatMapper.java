@@ -1,10 +1,9 @@
 package com.vicras.mapper;
 
 import com.vicras.dto.CatDto;
-import com.vicras.exception.EntityNotFoundException;
 import com.vicras.model.Cat;
 import com.vicras.model.Person;
-import com.vicras.repository.PersonRepository;
+import com.vicras.service.PersonService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -17,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public abstract class CatMapper {
 
     @Autowired
-    private PersonRepository personRepository;
+    private PersonService personService;
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
@@ -30,8 +29,7 @@ public abstract class CatMapper {
 
     @Named("findOwner")
     public Person mapToOwner(Long owner) {
-        return personRepository.findById(owner)
-                .orElseThrow(() -> new EntityNotFoundException(Person.class, owner));
+        return personService.getPersonById(owner);
     }
 
 }

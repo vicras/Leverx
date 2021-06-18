@@ -41,6 +41,8 @@ public class PersonServiceImpl implements PersonService {
     public void removePersonById(Long id) {
         if (personRepository.existsById(id)) {
             personRepository.deleteById(id);
+        } else {
+            throw new EntityNotFoundException(Person.class, id);
         }
     }
 

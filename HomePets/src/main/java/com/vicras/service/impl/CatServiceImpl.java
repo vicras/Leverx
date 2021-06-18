@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -34,11 +33,10 @@ public class CatServiceImpl implements CatService {
     }
 
     @Override
-    public List<CatDto> getById(Long id) {
+    public CatDto getById(Long id) {
         return catRepository.findById(id)
                 .map(catMapper::fromCat)
-                .map(List::of)
-                .orElse(emptyList());
+                .orElseThrow(() -> new EntityNotFoundException(Cat.class, id));
     }
 
     @Override
@@ -59,6 +57,8 @@ public class CatServiceImpl implements CatService {
     public void removeCatById(Long id) {
         if (catRepository.existsById(id)) {
             catRepository.deleteById(id);
+        } else {
+            throw new EntityNotFoundException(Cat.class, id);
         }
     }
 

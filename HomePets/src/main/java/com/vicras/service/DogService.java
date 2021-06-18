@@ -11,7 +11,7 @@ public interface DogService {
 
     List<DogDto> getAll();
 
-    List<DogDto> getById(Long id);
+    DogDto getById(Long id);
 
     void updateDog(DogDto dogDto);
 

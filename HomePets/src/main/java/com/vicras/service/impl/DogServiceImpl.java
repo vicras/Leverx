@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -34,11 +33,10 @@ public class DogServiceImpl implements DogService {
     }
 
     @Override
-    public List<DogDto> getById(Long id) {
+    public DogDto getById(Long id) {
         return dogRepository.findById(id)
                 .map(dogMapper::fromDog)
-                .map(List::of)
-                .orElse(emptyList());
+                .orElseThrow(() -> new EntityNotFoundException(Dog.class, id));
     }
 
     @Override
@@ -59,6 +57,8 @@ public class DogServiceImpl implements DogService {
     public void removeDogById(Long id) {
         if (dogRepository.existsById(id)) {
             dogRepository.deleteById(id);
+        } else {
+            throw new EntityNotFoundException(Dog.class, id);
         }
     }
 
