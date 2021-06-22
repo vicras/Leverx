@@ -3,7 +3,7 @@ server:
 
 spring:
   profiles:
-    active: ${SPRING_ACTIVE_PROFILE:Dev}
+    active: @SPRING_PROFILES_ACTIVE@
 
   jackson:
     mapper.ACCEPT_CASE_INSENSITIVE_ENUMS: true
