@@ -1,0 +1,9 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  profiles:
+    active: @SPRING_PROFILES_ACTIVE@
+
+  jackson:
+    mapper.ACCEPT_CASE_INSENSITIVE_ENUMS: true

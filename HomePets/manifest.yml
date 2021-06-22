@@ -1,0 +1,9 @@
+applications:
+  - name: homepats
+    instance: 1
+    memory: 1G
+    disk_quota: 512M
+    path: target/home_pats_app-1.0-SNAPSHOT.jar
+    buildpack: https://github.com/cloudfoundry/java-buildpack.git#v4.16
+    env:
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+}}'
