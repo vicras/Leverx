@@ -7,15 +7,18 @@ import com.vicras.model.Person;
 import com.vicras.repository.PersonRepository;
 import com.vicras.service.PersonService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.lang.String.format;
 import static java.util.stream.Collectors.toList;
 
 /**
  * @author viktar hraskou
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PersonServiceImpl implements PersonService {
@@ -27,6 +30,7 @@ public class PersonServiceImpl implements PersonService {
     public void addNewPerson(PersonDto personDto) {
         Person person = personMapper.toPerson(personDto);
         personRepository.save(person);
+        log.info(format("person with id=%d added %s", personDto.getId(), person));
     }
 
     @Override
@@ -35,6 +39,7 @@ public class PersonServiceImpl implements PersonService {
                 .map(oldPerson -> updateExistingPerson(oldPerson, personDto))
                 .orElseThrow(() -> new EntityNotFoundException(Person.class, personDto.getId()));
         personRepository.save(person);
+        log.info(format("person with id=%d updated %s", personDto.getId(), person));
     }
 
     @Override
@@ -44,6 +49,7 @@ public class PersonServiceImpl implements PersonService {
         } else {
             throw new EntityNotFoundException(Person.class, id);
         }
+        log.info(format("person with id=%d removed", id));
     }
 
     @Override

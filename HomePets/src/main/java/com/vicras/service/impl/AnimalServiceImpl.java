@@ -9,13 +9,18 @@ import com.vicras.repository.AnimalRepository;
 import com.vicras.service.AnimalService;
 import com.vicras.service.PersonService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import static java.lang.String.format;
 import static java.util.function.Predicate.not;
+import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AnimalServiceImpl implements AnimalService {
@@ -40,6 +45,16 @@ public class AnimalServiceImpl implements AnimalService {
 
         setOwnerForAnimals(animalsFrom, ownerTo);
         setOwnerForAnimals(animalsTo, ownerFrom);
+
+        logAnimals(animalsFrom, ownerTo);
+        logAnimals(animalsTo, ownerFrom);
+    }
+
+    private void logAnimals(List<Animal> animalsFrom, Person ownerTo) {
+        String animals = animalsFrom.stream()
+                .map(animal -> animal.getName() + " with id=" + animal.getId())
+                .collect(joining(", "));
+        log.info(format("animals %s go over user with id=%d",animals, ownerTo.getId()));
     }
 
     private Person getPersonById(Long ownerFrom) {

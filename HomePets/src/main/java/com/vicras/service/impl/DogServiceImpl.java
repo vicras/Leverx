@@ -8,15 +8,18 @@ import com.vicras.repository.DogRepository;
 import com.vicras.service.DogService;
 import com.vicras.service.PersonService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.lang.String.format;
 import static java.util.stream.Collectors.toList;
 
 /**
  * @author viktar hraskou
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class DogServiceImpl implements DogService {
@@ -45,12 +48,14 @@ public class DogServiceImpl implements DogService {
                 .map(oldDog -> updateExistingDog(oldDog, dogDto))
                 .orElseThrow(() -> new EntityNotFoundException(Dog.class, dogDto.getId()));
         dogRepository.save(dog);
+        log.info(format("dog with id=%d updated %s", dogDto.getId(), dog));
     }
 
     @Override
     public void addDog(DogDto dogDto) {
         Dog dog = dogMapper.toDog(dogDto);
         dogRepository.save(dog);
+        log.info(format("dog with id=%d added %s", dogDto.getId(), dog));
     }
 
     @Override
@@ -60,6 +65,7 @@ public class DogServiceImpl implements DogService {
         } else {
             throw new EntityNotFoundException(Dog.class, id);
         }
+        log.info(format("dog with id=%d removed", id));
     }
 
     Dog updateExistingDog(Dog oldDog, DogDto newDog) {

@@ -8,15 +8,18 @@ import com.vicras.repository.CatRepository;
 import com.vicras.service.CatService;
 import com.vicras.service.PersonService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.lang.String.format;
 import static java.util.stream.Collectors.toList;
 
 /**
  * @author viktar hraskou
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CatServiceImpl implements CatService {
@@ -42,15 +45,17 @@ public class CatServiceImpl implements CatService {
     @Override
     public void updateCat(CatDto catDto) {
         Cat cat = catRepository.findById(catDto.getId())
-                .map(oldDog -> updateExistingCat(oldDog, catDto))
+                .map(oldCat -> updateExistingCat(oldCat, catDto))
                 .orElseThrow(() -> new EntityNotFoundException(Cat.class, catDto.getId()));
         catRepository.save(cat);
+        log.info(format("cat with id=%d updated %s", catDto.getId(), cat));
     }
 
     @Override
     public void addCat(CatDto catDto) {
         Cat cat = catMapper.toCat(catDto);
         catRepository.save(cat);
+        log.info(format("cat with id=%d added %s", catDto.getId(), cat));
     }
 
     @Override
@@ -60,6 +65,7 @@ public class CatServiceImpl implements CatService {
         } else {
             throw new EntityNotFoundException(Cat.class, id);
         }
+        log.info(format("cat with id=%d removed", id));
     }
 
     Cat updateExistingCat(Cat oldCat, CatDto newCat) {

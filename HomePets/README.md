@@ -44,7 +44,7 @@ To deploy application
   
 Application successfully deployed 
 
-You can use 'cf logs homepats --recent' to get logs from your app
+You can use `cf logs homepats --recent` to get logs from your app
 
 
 In order to use JDK 11, you need to use java buildpack v4.16+.
