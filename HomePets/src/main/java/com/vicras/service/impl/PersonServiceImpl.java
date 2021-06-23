@@ -32,8 +32,7 @@ public class PersonServiceImpl implements PersonService {
     public void addNewPerson(PersonDto personDto) {
         Person person = personMapper.toPerson(personDto);
         personRepository.save(person);
-        personRepository.flush();
-        log.info(format("person with id=%d added %s", personDto.getId(), person));
+        log.info(format("person with id=%d added %s", person.getId(), person));
     }
 
     @Override
@@ -42,7 +41,7 @@ public class PersonServiceImpl implements PersonService {
                 .map(oldPerson -> updateExistingPerson(oldPerson, personDto))
                 .orElseThrow(() -> new EntityNotFoundException(Person.class, personDto.getId()));
         personRepository.save(person);
-        log.info(format("person with id=%d updated %s", personDto.getId(), person));
+        log.info(format("person with id=%d updated %s", person.getId(), person));
     }
 
     @Override

@@ -50,14 +50,14 @@ public class DogServiceImpl implements DogService {
                 .map(oldDog -> updateExistingDog(oldDog, dogDto))
                 .orElseThrow(() -> new EntityNotFoundException(Dog.class, dogDto.getId()));
         dogRepository.save(dog);
-        log.info(format("dog with id=%d updated %s", dogDto.getId(), dog));
+        log.info(format("dog with id=%d updated %s", dog.getId(), dog));
     }
 
     @Override
     public void addDog(DogDto dogDto) {
         Dog dog = dogMapper.toDog(dogDto);
         dogRepository.save(dog);
-        log.info(format("dog with id=%d added %s", dogDto.getId(), dog));
+        log.info(format("dog with id=%d added %s", dog.getId(), dog));
     }
 
     @Override

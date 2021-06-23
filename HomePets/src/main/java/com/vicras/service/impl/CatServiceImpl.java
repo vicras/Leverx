@@ -50,14 +50,14 @@ public class CatServiceImpl implements CatService {
                 .map(oldCat -> updateExistingCat(oldCat, catDto))
                 .orElseThrow(() -> new EntityNotFoundException(Cat.class, catDto.getId()));
         catRepository.save(cat);
-        log.info(format("cat with id=%d updated %s", catDto.getId(), cat));
+        log.info(format("cat with id=%d updated %s", cat.getId(), cat));
     }
 
     @Override
     public void addCat(CatDto catDto) {
         Cat cat = catMapper.toCat(catDto);
         catRepository.save(cat);
-        log.info(format("cat with id=%d added %s", catDto.getId(), cat));
+        log.info(format("cat with id=%d added %s", cat.getId(), cat));
     }
 
     @Override
