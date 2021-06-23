@@ -12,8 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 import static java.util.function.Predicate.not;
@@ -22,6 +22,7 @@ import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class AnimalServiceImpl implements AnimalService {
 
@@ -54,7 +55,7 @@ public class AnimalServiceImpl implements AnimalService {
         String animals = animalsFrom.stream()
                 .map(animal -> animal.getName() + " with id=" + animal.getId())
                 .collect(joining(", "));
-        log.info(format("animals %s go over user with id=%d",animals, ownerTo.getId()));
+        log.info(format("animals %s go over user with id=%d", animals, ownerTo.getId()));
     }
 
     private Person getPersonById(Long ownerFrom) {

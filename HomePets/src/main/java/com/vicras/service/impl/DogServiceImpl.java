@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 import static java.lang.String.format;
@@ -21,6 +22,7 @@ import static java.util.stream.Collectors.toList;
  */
 @Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class DogServiceImpl implements DogService {
 
