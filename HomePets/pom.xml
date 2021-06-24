@@ -76,6 +76,12 @@
             <version>3.5</version>
         </dependency>
 
+        <!-- SAP cloud -->
+        <dependency>
+            <groupId>com.sap.cloud.sdk.cloudplatform</groupId>
+            <artifactId>scp-cf</artifactId>
+            <version>3.46.0</version>
+        </dependency>
     </dependencies>
 
     <profiles>

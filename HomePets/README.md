@@ -98,3 +98,7 @@ applications:
 **Result:**
 
 ![](docs/img/idea_datasource.png)
+
+## LINK
+
+  * More information about PostgreSQL service [here](https://help.sap.com/doc/bbbc4d8289764452a16a37a982822103/Cloud/en-US/PostgreSQL_EN.pdf)
