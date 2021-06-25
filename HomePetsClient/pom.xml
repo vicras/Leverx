@@ -19,6 +19,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
         <sap.cloud.version>3.46.0</sap.cloud.version>
+        <cf.logback.version>3.4.0</cf.logback.version>
     </properties>
 
     <dependencies>
@@ -51,6 +52,13 @@
             <groupId>com.sap.cloud.sdk.cloudplatform</groupId>
             <artifactId>scp-cf</artifactId>
             <version>${sap.cloud.version}</version>
+        </dependency>
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>com.sap.hcp.cf.logging</groupId>
+            <artifactId>cf-java-logging-support-logback</artifactId>
+            <version>${cf.logback.version}</version>
         </dependency>
 
     </dependencies>

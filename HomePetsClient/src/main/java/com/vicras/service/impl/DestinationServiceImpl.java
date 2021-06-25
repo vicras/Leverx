@@ -4,6 +4,7 @@ import com.vicras.exception.RequestExecutionException;
 import com.vicras.recuester.DestinationRequester;
 import com.vicras.service.DestinationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,9 +14,12 @@ import org.springframework.stereotype.Controller;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+import static java.lang.String.format;
+
 /**
  * @author viktar hraskou
  */
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class DestinationServiceImpl implements DestinationService {
@@ -47,8 +51,13 @@ public class DestinationServiceImpl implements DestinationService {
     }
 
     private ResponseEntity<String> executeRequestForUri(String endpoint) {
+        log.info("Try to send GET request to endpoint=" + endpoint);
+
         var httpResponse = requester.doSearch(endpoint);
-        return getResponseEntityFromHttpResponse(httpResponse);
+        var responseEntity = getResponseEntityFromHttpResponse(httpResponse);
+
+        log.info(format("Response from destination service: %s", responseEntity));
+        return responseEntity;
     }
 
     private ResponseEntity<String> getResponseEntityFromHttpResponse(HttpResponse httpResponse) {
