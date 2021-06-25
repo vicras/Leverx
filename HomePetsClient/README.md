@@ -28,7 +28,7 @@ applications:
 #### Destination configuration 
 
 
-![](/docs/img/dest_conf.png)
+![](docs/img/dest_conf.png)
 
 
 ## Useful links
