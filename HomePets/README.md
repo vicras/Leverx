@@ -99,6 +99,53 @@ applications:
 
 ![](docs/img/idea_datasource.png)
 
+## Customizing logs 
+
+1. Add file `src/main/resources/logback-spring.xml`
+   
+2. Content of file:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <springProfile name="!cloud">
+        <include resource="org/springframework/boot/logging/logback/base.xml"/>
+        <root level="INFO"/>
+        <logger name="org.springframework.web" level="INFO"/>
+    </springProfile>
+    <springProfile name="cloud">
+        <appender name="STDOUT-JSON" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder class="com.sap.hcp.cf.logback.encoder.JsonEncoder"/>
+        </appender>
+        <root level="INFO">
+            <appender-ref ref="STDOUT-JSON"/>
+        </root>
+        <logger name="com.sap.cloud.sdk" level="INFO"/>
+        <logger name="package.to.log" level="DEBUG"/>
+    </springProfile>
+</configuration>
+```
+
+3. Add dependency to .pom file
+```
+<dependency>
+    <groupId>com.sap.hcp.cf.logging</groupId>
+    <artifactId>cf-java-logging-support-logback</artifactId>
+    <version>${cf.logback.version}</version>
+</dependency>
+```
+
+Logs example:
+
+| ![](docs/img/log_example1.png) |
+|:------------------------------:|
+|  In terminal |
+
+
+| ![](docs/img/log_example2.png) |
+|:------------------------------:|
+|  In kibana |
+
 ## LINK
 
   * More information about PostgreSQL service [here](https://help.sap.com/doc/bbbc4d8289764452a16a37a982822103/Cloud/en-US/PostgreSQL_EN.pdf)
+  * More information about SAP Cloud Logging [here](https://sap.github.io/cloud-sdk/docs/java/guides/logging-overview/)
