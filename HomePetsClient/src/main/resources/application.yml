@@ -1,1 +1,9 @@
-
+services:
+  destination:
+    destinations:
+      pets:
+        name: homePetsDestination
+    endpoints:
+      person: "/person"
+      cat: "/cat"
+      dog: "/dog"
