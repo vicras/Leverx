@@ -1,8 +1,8 @@
 package com.vicras.service.impl;
 
 import com.vicras.exception.RequestExecutionException;
-import com.vicras.service.DestinationService;
 import com.vicras.recuester.DestinationRequester;
+import com.vicras.service.DestinationService;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
