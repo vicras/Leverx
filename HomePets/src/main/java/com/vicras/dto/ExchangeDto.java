@@ -1,6 +1,7 @@
 package com.vicras.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.UniqueElements;
@@ -12,6 +13,7 @@ import java.util.List;
  * @author viktar hraskou
  */
 @Data
+@Builder
 public class ExchangeDto {
 
     @Range
