@@ -25,13 +25,11 @@ public class Cat extends Animal {
     @Enumerated(EnumType.STRING)
     private CatBreed breed;
 
+    @Builder
     public Cat(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, String name, Person owner, CatBreed breed) {
         super(id, createdAt, updatedAt, name, owner);
         this.breed = breed;
     }
-
-    @Builder
-
 
     @Override
     public String seyHello() {
